@@ -1,0 +1,126 @@
+<!-- <app-breadcrumb [title]="'Register'" [breadcrumb]="'Register'"></app-breadcrumb> -->
+<!-- section start -->
+<section class="register-page section-b-space mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <h3>create account</h3>
+                <div class="theme-card">
+                    <form class="theme-form" [formGroup]="form" (ngSubmit)="onSubmit()" *ngIf="showDiv.signUpDiv">
+                        <div class="row form-row">
+                            <div class="col-md-6 mb-4">
+                                <label for="fname">First Name</label>
+                                <input type="text" class="form-control m-0" id="fname" placeholder="First Name" required="" formControlName="fname" (keydown)="handleEnter($event, 'lname')">
+                                <div *ngIf="fname.invalid && (fname.dirty || fname.touched)" class="text text-danger mt-1">
+                                    <div *ngIf="fname.errors?.required">
+                                        First Name is required.
+                                    </div>
+                                    <div *ngIf="fname.errors?.pattern">
+                                        First Name Only Contain Letter with space
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="lname">Last Name</label>
+                                <input type="text" class="form-control m-0" id="lname" placeholder="Last Name" required="" formControlName="lname" (keydown)="handleEnter($event, 'email')">
+                                <div *ngIf="lname.invalid && (lname.dirty || lname.touched)" class="text text-danger mt-1">
+                                    <div *ngIf="lname.errors?.required">
+                                        Last name is required.
+                                    </div>
+                                    <div *ngIf="lname.errors?.pattern">
+                                        Last Name Only Contain Letter with space
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row form-row" *ngIf="showDiv.signUpDiv">
+                            <div class="col-md-6 mb-4">
+                                <label for="email">email</label>
+                                <input type="email" id="email" class="form-control m-0" placeholder="Email" formControlName="email" (keydown)="handleEnter($event, 'password')">
+                                <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text text-danger mt-1">
+                                    <div *ngIf="email.errors?.required">
+                                        Email is required.
+                                    </div>
+                                    <div *ngIf="email.errors?.email || email.errors?.pattern">
+                                        Please enter a valid email.
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="password">Password</label>
+                                <input type="password" class="form-control m-0"  id="password" placeholder="Enter your password" required="" formControlName="password" (keydown)="handleEnter($event, 'repeat_password')">
+                                <div *ngIf="password.invalid && (password.dirty || password.touched)" class="text text-danger mt-1">
+                                    <div *ngIf="password.errors?.required">
+                                        Password is required.
+                                    </div>
+                                    <div *ngIf="password.errors?.minlength">
+                                        Password will be minimum 8 character.
+                                    </div>
+                                    <div *ngIf="password.errors?.maxlength">
+                                        Password will be miximum 15 character.
+                                    </div>
+                                    <div class="text-danger" class="error-text" *ngIf="password.hasError('passwordStrength')">
+                                        {{password.errors['passwordStrength']}}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4" *ngIf="showDiv.signUpDiv">
+                                <label for="repeat_password">Repeat Password</label>
+                                <input type="password" class="form-control m-0"  id="repeat_password" placeholder="Repeat your password" required="" formControlName="repeat_password" (keydown)="handleEnter($event, 'phone')">
+                                <div *ngIf="repeat_password.invalid && (repeat_password.dirty || repeat_password.touched) && repeat_password.errors" class="text text-danger mt-1">
+                                    <div *ngIf="repeat_password.errors?.required">
+                                        Repeat password is required.
+                                    </div>
+                                    <div *ngIf="repeat_password.errors.matching">Passwords does not match</div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4">
+                                <label for="phone">Phone</label>
+                                <input type="text" class="form-control m-0" id="phone" placeholder="Enter your phone" required="" formControlName="phone"  (keydown)="handleEnter($event)">
+                                <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text text-danger mt-1">
+                                    <div *ngIf="phone.errors?.required">
+                                        Phone number is required.
+                                    </div>
+                                    <div *ngIf="phone.errors?.pattern">
+                                        Only number is allowed.
+                                    </div>
+                                    <div *ngIf="phone.errors?.maxlength">
+                                        Phone number only allow 15 digits.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <button type="submit" class="createBtn"> Create Account </button>
+                        </div>
+                        <!-- 
+                        <div [className]="isValid ? 'alert mt-3 alert-success' : 'alert mt-3 alert-danger'" role="alert" *ngIf="isValid || !phValid">
+                            <div class="d-flex align-items-center"><span *ngIf="isValid"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i> &nbsp;</span>{{signupMassage}}</div>
+                        </div> -->
+
+                    </form>
+
+                    <div class="form-row" *ngIf="showDiv.otp">
+                        <div class="col-md-12">
+                            <label for="otp">OTP</label>
+                            <ng-otp-input [config]="{length:4, isPasswordInput: true, allowNumbersOnly: true}" (onInputChange)="onOtpChange($event)"></ng-otp-input>
+                            <!-- <div class="otpshow mb-3">Your OTP is {{getOtpVal}}</div> -->
+                            <div class="timer-sec" *ngIf="otpTimerstatus">
+                                OTP Time Left <span>{{transform(counter)}}</span><span class="pl-2"><a *ngIf="counter == 0" (click)="otpresend()">Resend OTP</a></span>
+                            </div>
+                            <!-- <div class="alert alert-danger" role="alert" *ngIf="!otpValid">
+                                {{otpMassage}}
+                            </div> -->
+                            <button type="submit" class="btn btn-solid rounded-lg" (click)="otpverify()">Verify OTP</button>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->

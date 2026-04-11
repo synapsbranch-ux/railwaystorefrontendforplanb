@@ -1,0 +1,99 @@
+.card {
+    input {
+        position: absolute;
+        top: 25px;
+        right: 15px;
+    }
+}
+
+a {
+    cursor: pointer;
+}
+
+address {
+    p {
+        margin-bottom: 0px;
+    }
+
+    h4 {
+        span {
+            font-size: 14px;
+            background-color: #003e94;
+            padding: 5px 8px;
+            border-radius: 6px;
+            margin-left: 20px;
+            color: #fff;
+            position: absolute;
+            right: 40px;
+        }
+    }
+}
+
+.card {
+    margin-bottom: 10px;
+}
+
+.text-danger {
+    padding-bottom: 25px;
+
+    div {
+        &:first-child {
+            margin-top: -25px;
+        }
+    }
+}
+
+.delete_address {
+    position: absolute;
+    right: 15px;
+    bottom: 15px;
+    color: #b1b1b1 !important;
+
+    &:hover {
+        color: #f00 !important;
+    }
+}
+
+.dashboard-left {
+    .block-content {
+        padding: 0;
+
+        ul li {
+            border-bottom: 1px solid #e5e5e5;
+            align-items: center;
+
+            &:hover {
+                background-color: #003e94;
+                color: #fff;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+            &:last-child {
+                border: none;
+            }
+
+            &:before {
+                margin-top: 14px;
+            }
+        }
+
+        ul li.active {
+            padding-left: 15px;
+            background-color: #003e94;
+            color: #fff;
+
+            a {
+                color: #fff;
+            }
+        }
+    }
+}
+
+.account-sidebar {
+    a {
+        color: #fff;
+    }
+}

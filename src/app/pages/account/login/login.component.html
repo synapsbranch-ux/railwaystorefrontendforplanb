@@ -1,0 +1,60 @@
+<!--Section start-->
+<section class="login-page section-b-space mb-5">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6">
+                <h3>Login</h3>
+                <div class="theme-card">
+                    <form class="theme-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="form-group">
+                            <label for="phone_email">Email / Phone Number</label>
+                            <input type="text" class="form-control" id="phone_email" placeholder="Email Or Phone" required="" formControlName="phone_email" (keydown)="handleEnter($event, 'login_password')">
+                            <div *ngIf="phone_email.invalid && (phone_email.dirty || phone_email.touched)" class="text text-danger">
+                                <div *ngIf="phone_email.errors?.required">
+                                    Email or Phone is required.
+                                </div>
+                                <div *ngIf="phone_email.errors?.pattern">
+                                    Email or Phone Only Contain Letter, number
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="login_password">Password</label>
+                            <div class="password_sec">
+                                <input type="{{passworfieldtype}}" class="form-control" id="login_password" placeholder="Enter your password" required="" formControlName="login_password" (keydown)="handleEnter($event)">
+                                <span (click)="changeIcon()" class="fa {{passwordicon}} field-icon toggle-password"></span>
+                            </div>
+                            <div *ngIf="login_password.invalid && (login_password.dirty || login_password.touched)" class="text text-danger mt-1 pt-2">
+                                <div *ngIf="login_password.errors?.required">
+                                    Password is required.
+                                </div>
+                                <div *ngIf="login_password.errors?.minlength">
+                                    Password will be minimum 8 character.
+                                </div>
+                                <div *ngIf="login_password.errors?.maxlength">
+                                    Password will be miximum 15 character.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <button type="submit" class="loginBtn" >Login</button>
+                            <p class="float-right"><a [routerLink]="['/forgot-password']">Forgot Password</a></p>
+                        </div>
+                        
+                    </form>
+                </div>
+            </div>
+            <div class="col-lg-6 right-login">
+                <h3>New Customer</h3>
+                <div class="theme-card authentication-right">
+                    <h6 class="title-font">Create A Account</h6>
+                    <p>Sign up for a free account at our store. Registration is quick and easy. It allows you to be able to order from our shops.</p>
+                    <a [routerLink]="['/register']"><button class="createBtn">Create an Account</button></a>
+                    <!-- <p class="pt-3">"Wishing to build your own store? <a [routerLink]="['/register-vendor']">Create a free business account</a></p> -->
+                    <p class="pt-3">"Wishing to build your own store? <a [routerLink]="['/create-business-account']">Create a free business account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->

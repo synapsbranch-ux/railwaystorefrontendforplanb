@@ -1,0 +1,27 @@
+.timer-sec {
+    padding: 1.3rem;
+}
+
+.timer-sec a {
+    cursor: pointer;
+}
+
+.text-danger div:first-child
+{
+    margin-top: 10px;
+}
+
+.text-danger{
+    padding-bottom: 10px;
+}
+.createBtn {
+    border: 1px solid #1E3799;
+    border-radius: 50px;
+    color: #1E3799 !important;
+    padding: 12px 15px;
+    min-width: 120px;
+    &:hover{
+        background-color: #182c79;
+        color: #fff !important;
+    }
+}

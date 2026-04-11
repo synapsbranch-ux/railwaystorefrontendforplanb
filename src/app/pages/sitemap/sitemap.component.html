@@ -1,0 +1,126 @@
+<app-header-one [sticky]="true"></app-header-one>
+
+<section class="about-page  section-b-space">
+    <div class="container">
+        <div class="row sitemap-main">
+            <h3>RALBA TECHNOLOGIES Sitemap</h3>
+            <div>
+                <ul>
+                    <li>
+                        <a routerLink="/" title="Ralba Technologies, Home">
+                            <i class="fa fa-home me-1" aria-hidden="true"></i>
+                            <span class="link-text">Home</span>
+                        </a>
+                    </li>
+                    <li>
+                        <span>Account</span>
+                        <ul>
+                            <li> <a routerLink="/login">Sign In</a> </li>
+                            <li> <a routerLink="/register">Register</a> </li>
+                            <li> <a routerLink="/dashboard">Dashboard</a> </li>
+                            <li> <a routerLink="/change-password">Forgot Password</a> </li>
+                            <li> <a routerLink="/forgot-password">Forgot Password</a> </li>    
+                            <li> <a routerLink="/address">Forgot Password</a> </li>  
+                            <li> <a routerLink="/edit-address">Forgot Password</a> </li>    
+                            <li> <a routerLink="/edit-profile">Forgot Password</a> </li>    
+                        </ul>
+                    </li>
+                    <li>
+                        <span>About Us</span>
+                        <ul>
+                            <li> <a routerLink="/our-story">Our Story</a> </li>
+                            <li> <a routerLink="/register-vendor">Create your own store</a> </li>    
+                        </ul>
+                    </li>
+                    <li>
+                        <span>Category</span>
+                        <ul>
+                            <li> <a [routerLink]="'/all-products/' + defaultStore + '/men'">Men</a> </li>
+                            <li> <a [routerLink]="'/all-products/' + defaultStore + '/women'">Women</a> </li>
+                            <li> <a [routerLink]="'/all-products/' + defaultStore + '/unisex'">Unisex</a> </li>
+                            <li> <a [routerLink]="'/contact-products/' + defaultStore">Contacts</a> </li>      
+                        </ul>
+                    </li>
+                    <li>
+                        <span>Help</span>
+                        <ul>
+                            <li> <a routerLink="#">Contact Us</a> </li>
+                            <li> <a routerLink="/order-list">Order Status</a> </li>    
+                            <li> <a routerLink="/order-list">Returns</a> </li>         
+                        </ul>
+                    </li>
+                    <li>
+                        <span>User Agreement</span>
+                        <ul>
+                            <li> <a routerLink="terms-condition">Terms and Condition</a> </li>
+                            <li> <a routerLink="/privacy-policy">Privacy Policy</a> </li>    
+       
+                        </ul>
+                    </li>
+                    <li>
+                        <span>Shop</span>
+                        <ul>
+                            <li> <a routerLink="/wishlist">Wishlist</a> </li>
+                            <li> <a routerLink="/cart">Cart</a> </li>    
+                            <li> <a routerLink="/stores">Stores</a> </li>
+                            <li> <a routerLink="/department">Department</a> </li>
+                            <li> <a routerLink="/home/fashion">Fashion</a> </li>
+
+                            <!-- <li> <a routerLink="/product/yunicbrightvision">Product</a> </li> -->
+                            <!-- <li> <a routerLink="/contact-product/yunicbrightvision">Contact Product</a> </li> -->
+                            <!-- <li> <a routerLink="/tryon">Try On</a> </li> -->
+                            <!-- <li> <a routerLink="/live-video">Live Video</a> </li> -->
+                            <li> <a [routerLink]="'/2d-products/' + defaultStore">2d Products</a> </li>
+                            <li> <a [routerLink]="'/store-2d-products/' + defaultStore + '/men'">2d Products Men</a> </li>
+                            <li> <a [routerLink]="'/store-2d-products/' + defaultStore + '/women'">2d Products Women</a> </li>
+                            <li> <a [routerLink]="'/store-2d-products/' + defaultStore + '/unisex'">2d Products Unisex</a> </li>
+                            <li> <a routerLink="/compare">Compare</a> </li>
+                            <li> <a routerLink="/checkout">Checkout</a> </li>
+                            <!-- <li> <a routerLink="/settings-header">Settings Header</a> </li> -->
+
+                            <li> <a routerLink="/search">Search</a> </li>
+                            <li> <a routerLink="/typography">Typography</a> </li>
+                            <li> <a routerLink="/review">Review</a> </li>
+
+                            <!-- <li> <a routerLink="/order/success">Fashion</a> </li>
+                            <li> <a routerLink="/compare/one">Fashion</a> </li>
+                            <li> <a routerLink="/compare/two">Fashion</a> </li> -->
+                            <!-- <li> <a routerLink="/lookbook">LookBook</a> </li> -->
+                            <!-- <li> <a routerLink="/404">404</a> </li> -->
+                            <!-- <li> <a routerLink="/comingsoon">Fashion</a> </li> -->
+                            <li> <a routerLink="/faq">FAQ</a> </li>
+                            <!-- <li> <a routerLink="/blog/left/sidebar">Fashion</a> </li>
+                            <li> <a routerLink="/blog/right/sidebar">Fashion</a> </li>
+                            <li> <a routerLink="/blog/no/sidebar">Fashion</a> </li>
+                            <li> <a routerLink="/blog/details">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/grid/two">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/grid/three">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/grid/four">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/masonry/grid/two">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/masonry/grid/three">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/masonry/grid/four">Fashion</a> </li>
+                            <li> <a routerLink="/portfolio/masonry/full-width">Fashion</a> </li>
+                            <li> <a routerLink="/3dstore">Fashion</a> </li>
+                            <li> <a routerLink="/order-list">Fashion</a> </li>
+                            <li> <a routerLink="/view-order">Fashion</a> </li>
+                            <li> <a routerLink="/elements/theme/title">Fashion</a> </li>
+                            <li> <a routerLink="/elements/theme/collection-banner">Fashion</a> </li>
+                            <li> <a routerLink="/elements/theme/home-slider">Fashion</a> </li>
+                            <li> <a routerLink="/elements/theme/category">Fashion</a> </li>
+                            <li> <a routerLink="/elements/theme/services">Fashion</a> </li>
+                            <li> <a routerLink="/elements/product/slider">Fashion</a> </li>
+                            <li> <a routerLink="/elements/product/banners">Fashion</a> </li>
+                            <li> <a routerLink="/elements/product/tabs">Fashion</a> </li>
+                            <li> <a routerLink="/product/elements/multi-slider">Fashion</a> </li> -->
+
+
+
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-footer-one></app-footer-one>

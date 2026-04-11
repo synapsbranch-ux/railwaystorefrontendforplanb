@@ -1,0 +1,29 @@
+.store-image {
+    width: 85px;
+    height: 85px;
+    background-position: center center;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-color: #80808030;
+    display: inline-block;
+    margin: 10px 10px 3px 10px;
+    cursor: pointer;
+    
+  }
+  .storeside-img {
+    border: solid 3px transparent;
+  }
+  .storeside-img:hover {
+    border: solid 3px #3e323e;
+  }
+  .true{
+    cursor: not-allowed;
+    pointer-events: all !important;
+  }
+  .roomavailabla.false{
+    display: none;
+  }
+  .roomavailabla.true{
+    display: block;
+    color: #ff0000;
+  }

@@ -1,0 +1,59 @@
+.rack_inn {
+    width: 100%;
+    position: relative;
+}
+
+.rack_inn img {
+    width: 100%;
+}
+
+.top-heading {
+    flex-basis: 100%;
+}
+
+.sunglass_main {
+    position: absolute;
+    width: 100%;
+    // display: grid; 
+    justify-content: center;
+    align-items: center;
+    top: 75%;
+    left: 0;
+    padding: 0 5%;
+    box-sizing: border-box;
+}
+
+.sunbox {
+    width: 100%;
+    padding: 0 10%;
+}
+
+.sunglass_main:nth-child(2) {
+    top: 15%;
+    margin: 0 auto;
+}
+
+.sunglass_main:nth-child(3) {
+    top: 46%;
+}
+
+.full-container {
+    max-width: 1920px;
+}
+
+.btn.btn.btn-primary {
+    text-transform: capitalize;
+    margin: 2px;
+    font-weight: 500;
+}
+
+.more {
+    background-color: #1e3799;
+    border: 1px solid #1e3799;
+}
+
+@media only screen and (max-width: 600px) {
+    .sunbox {
+        padding: 0;
+    }
+}

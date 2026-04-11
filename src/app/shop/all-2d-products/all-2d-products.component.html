@@ -1,0 +1,190 @@
+<!-- NEW HTML DESIGN -->
+<section>
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-4">
+                <div class="pageBreadcrumb">
+                    Home / <a class="ms-2" href="">New Arrivals</a>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 text-center text-sm-end">
+                <div class="filterMenu">
+                    <ul>
+                        <li><a  href="">Men</a></li>
+                        <li><a class="active" href="">Women</a></li>
+                        <li><a href="">Unisex</a></li>
+                    </ul>
+                </div>
+                <div class="filterMenu ms-3">
+                    <ul>
+                        <li class="">
+                            <a href="#">Brand <img class="ms-2" src="assets/images/arrow-down.svg" width="10" alt="arrow"></a>
+                            <ul class="dropdown-menu">
+                                <li><a class="dropdown-item" href="#"><img class="w-100" src="assets/images/versace.png" alt="Brand"></a></li>
+                                <li><a class="dropdown-item" href="#"><img class="w-100" src="assets/images/versace.png" alt="Brand"></a></li>
+                                <li><a class="dropdown-item" href="#"><img class="w-100" src="assets/images/versace.png" alt="Brand"></a></li>
+                                <li><a class="dropdown-item" href="#"><img class="w-100" src="assets/images/versace.png" alt="Brand"></a></li>
+                                <li><a class="dropdown-item" href="#"><img class="w-100" src="assets/images/versace.png" alt="Brand"></a></li>
+                                <li><a class="dropdown-item" href="#"><img class="w-100" src="assets/images/versace.png" alt="Brand"></a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-4 col-lg-3 mb-4">
+                <div class="itemBox">
+                    <img src="https://ralbaassetstorage.s3.us-east-2.amazonaws.com/product/pro-1728953078.PNG" alt="">
+                    <div class="wishlistIcon d-flex align-items-center">
+                        <img src="assets/images/wishlist-icon.svg" class="w-100" alt="Wishlist">
+                    </div>
+                    <div class="row m-0 mt-3 productDetails align-items-center gx-0">
+                        <div class="col-6">
+                            <p class="productName">Calvin Klein</p>
+                            <p class="productCode">CK22538</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="productPrice">
+                               <span>$5.00</span> $3.00
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- NEW HTML DESIGN -->
+
+<!-- section start -->
+<section class="compare-padding">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+
+                <div class="row mb-4">
+                    <div class="col-sm-3">
+                        <div class="brands mb-2">
+                            <h5>Filter Brand ::</h5>
+                            <ng-select [clearSearchOnAdd]="true" bindLabel="brand_name"
+                                (change)="changeBrandname($event)" [clearable]="false" [items]="brandList"
+                                [(ngModel)]="selectedBrandName">
+                                <ng-template ng-option-tmp let-item="item" let-index="index">
+                                    <!-- <img height="25" width="25" style="object-fit: contain;" [src]="item.brand_image"/> -->
+                                    <b>{{item.brand_name}}</b>
+                                </ng-template>
+                            </ng-select>
+                        </div>
+                    </div>
+                    <div class="col-sm-9">
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div class="categories d-flex flex-wrap">
+                                <h5 class="top-heading">Categories ::</h5>
+                                <div *ngFor="let category of categoryList" class="d-flex flex-wrap">
+                                    <div *ngFor="let cat of category">
+                                        <!-- <div class="main_category" *ngIf="cat.attributes">
+                                            <button class="btn btn-primary rounded more" (click)="getCAtegoryDeatils(cat)" *ngIf="cat.category_slug == cat_slug">{{cat.category_name}}</button> 
+                                            <button class="btn btn-primary rounded" (click)="getCAtegoryDeatils(cat)" *ngIf="cat.category_slug != cat_slug">{{cat.category_name}}</button> 
+                                        </div> -->
+                                        <div class="sub_category" *ngIf="!cat.attributes">
+                                            <button class="btn btn-primary rounded more"
+                                                (click)="getCAtegoryDeatils(cat)"
+                                                *ngIf="cat.category_slug == cat_slug">{{cat.category_name}}</button>
+                                            <button class="btn btn-primary rounded" (click)="getCAtegoryDeatils(cat)"
+                                                *ngIf="cat.category_slug != cat_slug">{{cat.category_name}}</button>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <button class="btn btn-primary rounded" (click)="getAllProducts()">Clear Filter</button>
+                            </div>
+                        </div>
+
+                        <div class="pagiantion text-left mt-5">
+                            <pagination-controls (pageChange)="onPageChange($event)"></pagination-controls>
+                            <!-- <div class="mr-2">
+                                <button class="btn btn-sm btn-primary" *ngIf="showPrev" (click)="handlePrev()">Prev <<</button>
+                                <span class="buttons" *ngFor="let btnNumber of buttonNumbers">
+                                <button class="btn btn-sm btn-primary btns">{{btnNumber}}</button>
+                                </span>
+                                <button class="btn btn-sm btn-primary" *ngIf="showNext" (click)="handleNext();">Next >></button>
+                              </div> -->
+                        </div>
+
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="rack_inn">
+                    <div *ngFor="let section of groupedItems | paginate: { itemsPerPage: 9, currentPage: currentPage, totalItems: totalProducts }"
+                        class="sunglass_main">
+                        <div class="row">
+                            <div *ngFor="let product of section" class="col-12 col-sm-12 col-md-4">
+                                <div class="items">
+                                    <div class="img-wrapper">
+                                        <!-- <div class="lable-block">
+                                      <span class="lable3" *ngIf="product.new">new</span>
+                                      <span class="lable4" *ngIf="product.sale">on sale</span>
+                                    </div> -->
+                                        <div class="front text-center">
+                                            <a [routerLink]="['/product/', product.product_slug]">
+                                                <!-- <a [routerLink]="['/',product.product_store[0].store_slug,product.product_department[0].department_slug, product.product_slug]"> -->
+                                                <img [defaultImage]="ImageSrc ? ImageSrc : 'assets/images/product/placeholder.jpg'"
+                                                    [lazyLoad]="ImageSrc ? ImageSrc : product.product_image[0].pro_image"
+                                                    [src]="ImageSrc ? ImageSrc : product.product_image[0].pro_image"
+                                                    class="img-fluid lazy-loading" alt="{{ product.product_name }}" />
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <div class="product-detail">
+                                        <div class="mt-4">
+                                            <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
+                                            <a [routerLink]="['/product/', product.product_slug]">
+                                                <h6>{{ product?.product_name | titlecase }}</h6>
+                                            </a>
+                                            <!-- <p>{{ product?.description }}</p> -->
+                                            <h4 *ngIf="product?.product_sale_price">
+                                                <del>{{ product?.product_retail_price |
+                                                    currency:currency?.currency:'symbol'
+                                                    }}</del>
+                                                <span>{{ product?.product_sale_price |
+                                                    currency:currency?.currency:'symbol'
+                                                    }}</span>
+                                            </h4>
+                                            <h4 *ngIf="product?.product_sale_price == null">
+                                                <span>{{ product?.product_retail_price |
+                                                    currency:currency?.currency:'symbol'}}</span>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Section ends -->

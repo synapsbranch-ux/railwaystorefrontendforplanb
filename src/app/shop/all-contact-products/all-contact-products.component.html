@@ -1,0 +1,105 @@
+<!-- NEW HTML DESIGN -->
+<section class="pt-0">
+    <app-slider [sliders]="sliders" [textClass]="'text-center'" [category]="'fashion'" [buttonText]="'shop now'">
+    </app-slider>
+    <div class="container pt-4">
+        <div class="row align-items-center">
+            <div class="col-12 col-sm-4">
+                <div class="pageBreadcrumb">
+                    Home / <a class="ms-2" href="">Products</a>
+                </div>
+            </div>
+            <div class="col-12 col-sm-8 text-center text-sm-end">
+                <div class="filterMenu mr-2">
+                    <a class="clear" (click)="getAllProducts()">Clear Filter</a>
+                </div>
+                <div class="filterMenu ms-3">
+                    <ul>
+                        <li class="">
+                            <a (click)="barndPopup()">Brand <img class="ms-2" src="assets/images/arrow-down.svg"
+                                    width="10" alt="arrow"></a>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="pt-3">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-sm-4 col-lg-3 mb-4" *ngFor="let product of productList">
+                <div class="itemBox">
+                    <a [routerLink]="['/contact-product/', product.product_slug]">
+                        <img [defaultImage]="product?.product_image?.[0]?.pro_image ? product?.product_image?.[0]?.pro_image : 'assets/images/product/placeholder.jpg'"
+                            [lazyLoad]="product?.product_image?.[0]?.pro_image ? product?.product_image?.[0]?.pro_image : (product?.product_image?.[0]?.pro_image || 'assets/images/product/placeholder.jpg')"
+                            [src]="product?.product_image?.[0]?.pro_image ? product?.product_image?.[0]?.pro_image : (product?.product_image?.[0]?.pro_image || 'assets/images/product/placeholder.jpg')"
+                            class="img-fluid lazy-loading" alt="{{ product.product_name }}" />
+                    </a>
+
+                    <div class="wishlistIcon d-flex align-items-center">
+                        <a (click)="addToWishlist(product)"> <img
+                                *ngIf="!(productService.wishlistProductCheck(product))"
+                                src="assets/images/wishlist-icon.svg" class="w-100" alt="Wishlist"></a>
+                        <a (click)="addToWishlist(product)"><img *ngIf="(productService.wishlistProductCheck(product))"
+                                src="assets/images/wishlist-icon-solid.svg" class="w-100" alt="Wishlist"></a>
+                    </div>
+                    <div class="row m-0 mt-3 productDetails align-items-center gx-0">
+                        <div class="col-6">
+                            <a [routerLink]="['/contact-product/', product.product_slug]">
+                                <p class="productName">{{ product?.product_name | titlecase }}</p>
+                            </a>
+                            <p class="productCode">{{ product?.attributes[0]?.value }}</p>
+                        </div>
+                        <div class="col-6">
+                            <div class="productPrice" *ngIf="product?.product_sale_price">
+
+                                <span>{{ product?.product_retail_price |
+                                    currency:currency?.currency:'symbol'
+                                    }}</span>
+                                {{ product?.product_sale_price |
+                                currency:currency?.currency:'symbol'
+                                }}
+                            </div>
+                            <div class="productPrice" *ngIf="product?.product_sale_price == null">
+                                {{ product?.product_retail_price |
+                                currency:currency?.currency:'symbol'}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Loader while loading more products -->
+    <div *ngIf="isLoading" class="text-center">
+        <p>Loading more products...</p>
+    </div>
+</section>
+<div class="overlayDiv" *ngIf="showBrand">
+    <div class="dropdown-menu">
+        <ul>
+            <span class="closeBtn">
+                <a (click)="barndPopupClose()"><img src="assets/images/close.svg" width="100%" alt="Close"></a>
+            </span>
+            <li *ngFor="let brand of brandList">
+                <a class="dropdown-item" (click)="changeBrandname(brand)"
+                    [ngClass]="{'active': selectedBrand === brand._id}">
+                    <img *ngIf="brand.brand_image" class="w-100" [src]="brand.brand_image" alt="Brand">
+                    <span *ngIf="!brand.brand_image">{{ brand.brand_name }}</span>
+                </a>
+            </li>
+        </ul>
+        <div class="brandNav">
+            <ul>
+                <li class="pre" (click)="showPrevious()">Previous</li>
+                <li class="next" (click)="showNext()"> Next</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- NEW HTML DESIGN -->

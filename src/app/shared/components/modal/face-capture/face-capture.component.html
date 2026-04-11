@@ -1,0 +1,20 @@
+<!-- <button class="btn btn-outline-secondary mb-3" (click)="captureSelfie()" *ngIf="!captured">
+    📸 Take Picture
+</button> -->
+<p [ngClass]="{ 'text-success': isAligned, 'text-warning': !isAligned && guidanceMessage, 'text-muted': !guidanceMessage }" style="color: #2d5016 !important; font-weight: 500; margin-bottom: 0px;">
+            {{ guidanceMessage}}
+        </p>
+<div class="video-container">
+    <video #videoElement autoplay muted playsinline style="display: none;"></video>
+    <canvas #canvasElement width="640" height="480"></canvas>
+        <div *ngIf="countdownValue !== null" class="countdown-overlay">
+        <span>{{ countdownValue }}</span>
+    </div>
+    <div *ngIf="selfie" style="text-align: center; margin-top: 20px;">
+        <h3>Picture Captured:</h3>
+        <img [src]="safeSelfieUrl" alt="Selfie" />
+    </div>
+    <div class="alignment-hint text-center pb-3">
+        <p>🟢 Keep your face close and straight, aligned with the green line.</p>
+    </div>
+</div>

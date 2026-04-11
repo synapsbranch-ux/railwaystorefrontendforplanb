@@ -1,0 +1,55 @@
+.vendor-selector {
+    max-height: 70vh;
+    overflow-y: auto;
+    padding: 1rem;
+}
+
+.vendor-card {
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 0.75rem;
+    transition: border-color 0.2s, box-shadow 0.2s;
+    cursor: pointer;
+
+    &:hover {
+        border-color: #4a90d9;
+        box-shadow: 0 2px 8px rgba(74, 144, 217, 0.15);
+    }
+
+    &.selected {
+        border-color: #4a90d9;
+        background-color: #f0f7ff;
+    }
+}
+
+.vendor-logo {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    border-radius: 8px;
+    border: 1px solid #eee;
+}
+
+.vendor-name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.vendor-price {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #4a90d9;
+}
+
+.review-item {
+    border: 1px solid #eee;
+    border-radius: 6px;
+    background: #fafafa;
+}
+
+.add-review-form {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #f9f9f9;
+}

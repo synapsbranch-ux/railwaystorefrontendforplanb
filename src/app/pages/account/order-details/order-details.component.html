@@ -1,0 +1,217 @@
+<!-- <app-breadcrumb [title]="'Dashboard'" [breadcrumb]="'Dashboard'"></app-breadcrumb> -->
+
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="account-sidebar" (click)="ToggleDashboard()">
+                    <a href="javascript:void(0)" class="popup-btn">
+                        My Account
+                    </a>
+                </div>
+                <div class="dashboard-left" [class.open]="openDashboard">
+                    <div class="collection-mobile-back" (click)="ToggleDashboard()">
+                        <span class="filter-back">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i> back
+                        </span>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a [routerLink]="['/dashboard']">My Account</a></li>
+                            <li><a [routerLink]="['/address']">Address Book</a></li>
+                            <li class="active"><a [routerLink]="['/order-list']">Order List</a></li>
+                            <li><a [routerLink]="['/change-password']">Change Password</a></li>
+                            <li class="last"><a (click)="logout()">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="dashboard-right">
+                    <div class="dashboard row">
+                        <div class="col-lg-12">
+                            <div class="product-order">
+                                <h3 class="mb-4">your order details</h3>
+                                <div class="row">
+                                    <div class="col-lg-12 table-responsive">
+                                        <table class="w-100 table">
+                                            <tr>
+                                                <th class="pb-3">Product Image</th>
+                                                <th class="pb-3">Product Name</th>
+                                                <th class="pb-3">Quantity</th>
+                                                <th class="pb-3">Product Price</th>
+                                                <th class="pb-3 text-right">Addons Price</th>
+                                            </tr>
+                                            <tr *ngFor="let product of oderProducts">
+                                                <td>
+                                                    <img class="img-fluid product_img" [src]="product.product_image"
+                                                        [alt]="product.product_name">
+                                                </td>
+                                                <!-- Find the matching product details based on product_id -->
+                                                <td *ngIf="product.left_eye_qty > 0 || product.right_eye_qty > 0">
+                                                    {{ product.product_name | titlecase }} || {{
+                                                    findProductDetails(product.product_id)?.attributes[0]?.value }}
+                                                </td>
+                                                <td
+                                                    *ngIf="(product.left_eye_qty === undefined || product.left_eye_qty === 0) && (product.right_eye_qty === undefined || product.right_eye_qty === 0)">
+                                                    {{ product.product_name | titlecase }}
+                                                </td>
+                                                <td *ngIf="product.left_eye_qty > 0 || product.right_eye_qty > 0">
+                                                    Left Eye : {{ product.left_eye_qty }} | Right Eye : {{
+                                                    product.right_eye_qty }}
+                                                </td>
+                                                <td
+                                                    *ngIf="(product.left_eye_qty === undefined || product.left_eye_qty === 0) && (product.right_eye_qty === undefined || product.right_eye_qty === 0)">
+                                                    {{ product.qty }}
+                                                </td>
+                                                <td>{{ product.price |
+                                                    currency:product_service?.Currency.currency:'symbol' }}</td>
+                                                <td class="text-right">
+                                                    {{ (product.addonsprice ? product.addonsprice : 0) |
+                                                    currency:product_service?.Currency.currency:'symbol' }}
+                                                    <p class="m-0" *ngIf="product.addons.length > 0">
+                                                        <a class="pe-auto"
+                                                            (click)="viewAddonsDetails(product.addons,addonsDetails)">View
+                                                            Addons</a>
+                                                    </p>
+                                                </td>
+                                            </tr>
+
+                                            <tfoot class="table">
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Subtotal:</strong>
+                                                        {{ total_order_amount - (tax_percentage_value +
+                                                        shipping_charge_value) + discount |
+                                                        currency:product_service?.Currency.currency:'symbol' }}
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-right text-success"><strong>Discount:</strong>
+                                                        -{{discount |
+                                                        currency:product_service?.Currency.currency:'symbol'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Tax Amount:</strong>
+                                                        {{tax_percentage_value |
+                                                        currency:product_service?.Currency.currency:'symbol'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Shipping Charge:</strong>
+                                                        {{shipping_charge_value |
+                                                        currency:product_service?.Currency.currency:'symbol'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Total:</strong>
+                                                        {{total_order_amount |
+                                                        currency:product_service?.Currency.currency:'symbol'}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="5" class="text-right"><strong>Order Status:</strong> {{
+                                                        order_status | uppercase }}
+                                                    </td>
+                                                </tr>
+                                                <tr
+                                                    *ngIf="order_status == 'return requested' || order_status == 'return approved' || order_status == 'return in transit' || order_status == 'return received' || order_status == 'refunded'">
+                                                    <td colspan="5" class="text-right"><strong>Return Reason:</strong>
+                                                        {{ return_reason }}
+                                                    </td>
+                                                </tr>
+                                            </tfoot>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-12">
+                            <div class="row order-success-sec">
+                                <div class="col-sm-6">
+                                    <h4 class="fs-6">summary</h4>
+                                    <hr>
+                                    <ul class="order-detail fs-6">
+                                        <li><span>Order ID:</span> {{order_id}}</li>
+                                        <li><span>Order Date:</span> {{ createdAt | date:'MMMM d, y'}}</li>
+                                        <li><span>Order Total:</span> {{total_order_amount |
+                                            currency:product_service?.Currency.currency:'symbol'}}</li>
+                                    </ul>
+                                </div>
+                                <div class="col-sm-6">
+                                    <h4 class="fs-6">shipping address</h4>
+                                    <hr>
+                                    <ul class="order-detail fs-6">
+                                        <li>{{orderAddress?.user_full_name}}</li>
+                                        <li>{{orderAddress?.addressline1}}</li>
+                                        <li>{{orderAddress?.addressline2}}</li>
+                                        <li>{{orderAddress?.city}}</li>
+                                        <li>{{orderAddress?.state}} - {{orderAddress?.postal_code}}</li>
+                                        <li>Contact No. {{orderAddress?.mobile}}</li>
+                                    </ul>
+                                </div>
+
+                                <div class="col-sm-12 payment-mode">
+                                    <h4 class="fs-6">payment method</h4>
+                                    <hr>
+                                    <p><span>{{payment_method}}</span></p>
+                                    <p *ngIf="payment_method == 'COD'" class="fs-6">Pay on Delivery (Cash/Card). Cash on
+                                        delivery
+                                        (COD) available. Card/Net banking acceptance subject to device availability.</p>
+                                    <p class="fs-6">Payment Status : <span *ngIf="payment_status != 'APPROVED'"
+                                            class="text-warning">{{payment_status | uppercase}}</span><span
+                                            *ngIf="payment_status == 'APPROVED'" class="text-success">{{payment_status |
+                                            uppercase}}</span></p>
+                                </div>
+                                <div class="col-md-12" *ngIf="payment_status == 'APPROVED'">
+                                    <div class="delivery-sec">
+                                        <h3>expected date of delivery</h3>
+                                        <h2>{{expected_delivery | date:'MMMM d, y'}}</h2>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+</section>
+
+
+<!-- Dialog template -->
+
+<ng-template #addonsDetails let-modal>
+    <div class="modal-content warning_popup ">
+        <div class="warning_msg">
+            <div class="modal-header align-items-center justify-content-center">
+                <h3 class="modal-title text-center"><span>Addons Details</span></h3>
+            </div>
+            <div class="modal-body p-0">
+                <div>
+                    <table class="table">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Addons Name</th>
+                                <th scope="col">Addons Value</th>
+                                <th scope="col">Price</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let addon of addonsjson">
+                                <td *ngIf="addon.key">{{capitalizeString(addon.key)}}</td>
+                                <td *ngIf="addon.extra_document">
+                                    <div *ngFor="let adn of addon.extra_document">{{capitalizeString(adn.keyname)}}<span
+                                            class="img-addons"><a href="{{adn.fileUrl}}" target="_blank"><img
+                                                    src="assets/images/fileicon.png"
+                                                    alt="{{capitalizeString(adn.keyname)}}"></a> </span></div>
+                                </td>
+                                <td>{{capitalizeString(addon.value)}}</td>
+                                <td>{{addon.price | currency:product_service?.Currency.currency:'symbol'}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</ng-template>

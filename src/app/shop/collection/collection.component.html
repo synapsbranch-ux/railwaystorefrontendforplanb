@@ -1,0 +1,119 @@
+<!-- <section class="p-0 category_banner">
+    <img src="{{categories_image}}" class="img-fluid" alt="banner">
+</section> -->
+<!-- <app-breadcrumb [title]="'Collection'" [breadcrumb]="'Collection'"></app-breadcrumb> -->
+
+<!-- Custom Breadcrum for 3D store to 2D product List -->
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <div class="row">
+            <div class="col-sm-6">
+              <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                <ol class="breadcrumb">
+                  <li class="breadcrumb-item"><a href="{{storeurl}}">3D Store</a></li>
+                  <li class="breadcrumb-item active" aria-current="page">2D Product List</li>
+                </ol>
+              </nav>
+            </div>
+            <div class="col-sm-6">
+              <div class="breadcrumb">{{no_results}} Results</div>
+            </div>
+          </div>
+        </div>        
+      </div>
+    </div>
+  </div>
+  <!-- breadcrumb End -->
+
+<!-- section start -->
+<section class="pt-0 section-b-space">
+    <div class="collection-wrapper">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3">
+                    <div class="collection-filter" [class.openFilterbar]="mobileSidebar">
+                        <!-- side-bar colleps block stat -->
+                        <div class="collection-filter-block">
+                            <div class="collection-mobile-back" (click)="toggleMobileSidebar()">
+                                <span class="filter-back">
+                                    <i class="fa fa-angle-left" aria-hidden="true"></i> back
+                                </span>
+                            </div>
+                            <div class="filter_block">
+                                <h3 *ngIf="tags.length > 0" class="block-title">Filters <span class="clear_filter"><a href="javascript:void(0)" class="clear_filter" (click)="removeAllTags()">
+                                        Clear all
+                                    </a></span></h3>
+                            </div>
+                            <!-- Category filter start -->
+                            <!-- <app-categories></app-categories> -->
+                        </div>
+                        <!-- silde-bar colleps block end here -->
+                        <!-- side-bar colleps block stat -->
+                        <div class="collection-filter-block">
+                            <!-- brand filter start -->
+                            <!-- price filter start here -->
+                            <app-price [min]="minPrice" [max]="50000" (priceFilter)="updateFilter($event)">
+                            </app-price>
+                        </div>
+                        <!-- silde-bar colleps block end here -->
+                        <!-- side-bar single product slider start -->
+                        <!-- <app-product-box-vertical-slider [title]="'New Products'">
+                        </app-product-box-vertical-slider> -->
+                        <!-- side-bar single product slider end -->
+
+                    </div>
+                </div>
+                <div class="collection-content col">
+                    <div class="page-main-content">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-xl-12">
+                                        <div class="filter-main-btn" (click)="toggleMobileSidebar()">
+                                            <span class="filter-btn btn btn-theme">
+                                                <i class="fa fa-filter" aria-hidden="true"></i> Filter
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="collection-product-wrapper" id="products">
+                                    <app-grid [products]="products" [paginate]="paginate" [layoutView]="layoutView" [sortBy]="sortBy" (setGrid)="updateGridLayout($event)" (setLayout)="updateLayoutView($event)" (sortedBy)="sortByFilter($event)">
+                                    </app-grid>
+                                    <div class="product-wrapper-grid" [ngClass]="layoutView">
+                                        <div class="row">
+                                            <div class="col-grid-box" [ngClass]="grid" *ngFor="let product of products">
+
+                                                <div class="product-box">
+                                                    <app-product-box-one [product]="product" [currency]="productService?.Currency" [thumbnail]="true" [cartModal]="false" [loader]="true">
+                                                    </app-product-box-one>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12 text-center section-b-space mt-5 no-found" *ngIf="!products.length">
+                                                <div class="col-grid-box" *ngFor="let product of products">
+                                                    <div class="product-box">
+                                                        <p>Product Length :: {{products.length}}</p>
+                                                    </div>
+                                                </div>
+                                                <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+                                                <h3>Sorry! Couldn't find the product you were looking For!!! </h3>
+                                                <p>Please check if you have misspelt something or try searching with other words.</p>
+                                                <a [routerLink]="['/shop/collection/left/sidebar']" class="btn btn-solid">continue shopping</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <app-pagination [products]="products" [paginate]="paginate" (setPage)="setPage($event)">
+                                    </app-pagination> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- section End -->

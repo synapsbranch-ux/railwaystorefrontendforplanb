@@ -1,0 +1,20 @@
+.sitemap-main h3{
+    color: black;
+}
+
+.sitemap-main ul {
+  display: block;
+  list-style-type: square;
+//   margin-block-start: 1em;
+//   margin-block-end: 1em;
+  padding-inline-start: 40px;
+  font-size: 17px;
+}
+
+.sitemap-main li {
+    display: list-item;
+}
+
+.sitemap-main ul ul {
+    list-style-type: disc;
+}

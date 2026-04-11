@@ -1,0 +1,144 @@
+<!--footer section -->
+<footer [class]="class">
+    <!-- <div *ngIf="newsletter">
+        <div class="container">
+            <section class="small-section">
+                <div class="row">
+                    <div class="col-lg-6">
+                        <div class="subscribe">
+                            <div class="footer-logo">
+                                <a *ngIf="!vendorhome" routerLink="/" id="headerlogo">
+                                    <img [src]="themeLogo" class="img-fluid" alt="logo">
+                                </a>
+                                <a *ngIf="vendorhome" routerLink="/vendor/{{store_slug}}" id="headerlogo">
+                                    <img *ngIf="isvendorlogoimage" [src]="themeLogo" class="img-fluid" alt="logo">
+                                    <h2 *ngIf="!isvendorlogoimage">{{themeLogo}}</h2>
+                                    <small style="text-align: center;">Powered by Ralba Technologies</small>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div> -->
+    <section class="pt-5">
+        <div class="container">
+            <div class="row footer-theme partition-f">
+                <div class="col-12 col-sm-12">
+                    <div class="row">
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <div class="sub-title">
+                                <div class="footer-title">
+                                    <h4 class="mb-0">Account</h4>
+                                </div>
+                                <div class="footer-contant">
+                                    <ul>
+                                        <li><a routerLink="/login">Sign In</a></li>
+                                        <li><a routerLink="/register">Register</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <div class="sub-title">
+                                <div class="footer-title">
+                                    <h4 class="mb-0">About Us</h4>
+                                </div>
+                                <div class="footer-contant">
+                                    <ul>
+                                        <li><a routerLink="/our-story">Our Story</a></li>
+                                        <!-- <li><a routerLink="/register-vendor">create your own store</a></li> -->
+                                        <li><a routerLink="/create-business-account">create your own store</a></li>
+                                        <li><a routerLink="/become-an-affiliate">Become an Affiliate</a></li>
+                                        <li><a routerLink="/create-affinity-group">Create an Affinity Group</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <div class="sub-title">
+                                <div class="footer-title">
+                                    <h4 class="mb-0">Category</h4>
+                                </div>
+                                <div class="footer-contant">
+                                    <ul>
+                                        <!-- <li><a (click)="redirectcat('/category/shoes')">Shoes</a></li>
+                                        <li><a (click)="redirectcat('/category/apparels')">Apparels</a></li>
+                                        <li><a (click)="redirectcat('/category/bags')">Hand Bags</a></li> -->
+                                        <li *ngFor="let menu of menuarr"><a *ngIf="menu.category_slug != 'contact'"
+                                            href="/all-products/{{store_slug}}/{{menu.category_slug}}">{{menu.category_name}}</a>
+                                        <a *ngIf="menu.category_slug == 'contact'" href="/contact-products/{{store_slug}}"
+                                            routerLinkActive="active">{{menu.category_name}}</a>
+                                    </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6 col-sm-6 col-md-3">
+                            <div class="sub-title">
+                                <div class="footer-title">
+                                    <h4 class="mb-0">Help</h4>
+                                </div>
+                                <div class="footer-contant">
+                                    <ul>
+                                        <li><a routerLink="/contact">Contact Us</a></li>
+                                        <li><a routerLink="/order-list">Order Status</a></li>
+                                        <!-- <li><a routerLink="/order-list">Returns</a></li> -->
+                                        <li><a routerLink="/sitemap">Sitemap</a></li>
+                                        <li><a routerLink="/returns">Returns</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-sm-4">
+                    <div class="sub-title">
+                        <div class="footer-title">
+                            <h4 class="mb-0">Follow Us!</h4>
+                        </div>
+                        <div class="footer-contant">
+                            <p class="contact-list pt-2">
+                            </p>
+                            <div class="footer-social mt-2">
+                                <ul>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-facebook" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="fa fa-instagram" aria-hidden="true"></i></a>
+                                    </li>
+                                    <li>
+                                        <a href="javascript:void(0)"><i class="ti-twitter" aria-hidden="true"></i></a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> -->
+            </div>
+        </div>
+    </section>
+    <div class="sub-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-xl-12 col-md-12 col-sm-12">
+                    <div class="footer-end text-center">
+                        <p><i class="fa fa-copyright" aria-hidden="true"></i> {{ today | date:'y'}} Ralba Technologies | <a [routerLink]="['/privacy-policy']" routerLinkActive="router-link-active">Privacy Policy</a></p>
+                    </div>
+                    <!-- <div class="terms_area">
+                        <ul>
+                            <li></li>
+                        </ul>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+<!--footer section end -->

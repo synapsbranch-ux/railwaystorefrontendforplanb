@@ -1,0 +1,47 @@
+
+<div *ngIf="!loader">
+    <div class="img-wrapper">
+        <!-- <div class="lable-block">
+      <span class="lable3" *ngIf="product.new">new</span>
+      <span class="lable4" *ngIf="product.sale">on sale</span>
+    </div> -->
+        <div class="front">
+            <a [routerLink]="['/product/', product.product_slug]">
+                <!-- <a [routerLink]="['/',product.product_store[0].store_slug,product.product_department[0].department_slug, product.product_slug]"> -->
+                <img [defaultImage]="ImageSrc ? ImageSrc : 'assets/images/product/placeholder.jpg'" [lazyLoad]="ImageSrc ? ImageSrc : product.product_image[0].pro_image" [src]="ImageSrc ? ImageSrc : product.product_image[0].pro_image" class="img-fluid lazy-loading" alt="{{ product.product_name }}"
+                />
+            </a>
+        </div>
+        <div class="back" *ngIf="onHowerChangeImage">
+            <a [routerLink]="['/product/', product.product_slug]">
+                <img [src]="ImageSrc ? ImageSrc : product.product_image[0].pro_image" class="img-fluid lazy-loading" alt="{{ product.product_name}}">
+            </a>
+        </div>
+        <ul class="product-thumb-list" *ngIf="thumbnail">
+            <li class="grid_thumb_img" [class.active]="ImageSrc == image.pro_image" *ngFor="let image of product.product_image">
+                <a href="javascript:void(0)" (mouseover)="ChangeVariantsImage(image.pro_image)">
+                    <img [lazyLoad]="image.pro_image">
+                </a>
+            </li>
+        </ul>
+    </div>
+    <div class="product-detail">
+        <div class="mt-4">
+            <!-- <bar-rating [rate]="5" [readOnly]="true"></bar-rating> -->
+            <a [routerLink]="['/product/', product.product_slug]">
+                <h6>{{ product?.product_name | titlecase }}</h6>
+            </a>
+            <!-- <p>{{ product?.description }}</p> -->
+            <h4 *ngIf="product?.product_sale_price">
+                <del>{{ product?.product_retail_price | currency:currency?.currency:'symbol' }}</del>
+                <span>{{ product?.product_sale_price  | currency:currency?.currency:'symbol' }}</span>
+            </h4>
+            <h4 *ngIf="product?.product_sale_price == null">
+                <span>{{ product?.product_retail_price | currency:currency?.currency:'symbol'}}</span>
+            </h4>
+        </div>
+    </div>
+</div>
+<app-skeleton-product-box *ngIf="loader"></app-skeleton-product-box>
+<app-quick-view #quickView [product]="product" [currency]="currency"></app-quick-view>
+<app-cart-modal #cartModal [product]="product" [currency]="currency" *ngIf="cartModal"></app-cart-modal>

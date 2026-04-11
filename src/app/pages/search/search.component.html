@@ -1,0 +1,106 @@
+<!-- breadcrumb start -->
+<div class="breadcrumb-section">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <nav aria-label="breadcrumb" class="theme-breadcrumb">
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a [routerLink]="'/'">Home</a></li>
+                                <li class="breadcrumb-item active" aria-current="page">Search</li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="col-sm-6">
+                        <div class="breadcrumb">{{this.productList.length}} Results</div>
+                    </div>
+                </div>
+
+            </div>
+            <!--<div class="col-sm-6">
+        <div class="page-title">
+          <h2>{{ title }}</h2>
+        </div>
+      </div>-->
+
+        </div>
+    </div>
+</div>
+<!-- section start -->
+<section class="authentication-page section-b-space">
+    <div class="container">
+        <section class="search-block">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 offset-lg-3">
+                        <form class="form-header" [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="exampleInputPassword1"
+                                    [(ngModel)]="searchva" formControlName="searchkey" placeholder="Search a Product">
+                                <div *ngIf="searchkey.errors" class="text text-danger mt-1 pb-3">
+                                    <div *ngIf="searchkey.errors">
+                                        To search product you must have enter 3 letter
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <div class="col-sm-12 text-center" *ngIf="productList.length == undefined">
+            <img src="assets/images/empty-search.jpg" class="img-fluid mb-4">
+            <h3>Sorry! No results found </h3>
+            <p>Please check if you have misspelt something or try searching with other words.</p>
+            <a (click)="storeHomePage()" class="btn btn-solid">continue shopping</a>
+        </div>
+        <section class="pt-3" *ngIf="productList.length > 0">
+            <div class="container">
+                <div class="row">
+                    <div class="col-6 col-sm-4 col-lg-3 mb-4" *ngFor="let product of productList">
+                        <div class="itemBox">
+                            <a [routerLink]="product?.product_category_name === 'CONTACT' ? ['/contact-product/', product.product_slug] : ['/product/', product.product_slug]">
+                                <img 
+                                    [defaultImage]="product?.product_image?.[0]?.pro_image ? product?.product_image?.[0]?.pro_image : 'assets/images/product/placeholder.jpg'"
+                                    [lazyLoad]="product?.product_image?.[0]?.pro_image ? product?.product_image?.[0]?.pro_image : (product?.product_image?.[0]?.pro_image || 'assets/images/product/placeholder.jpg')"
+                                    [src]="product?.product_image?.[0]?.pro_image ? product?.product_image?.[0]?.pro_image : (product?.product_image?.[0]?.pro_image || 'assets/images/product/placeholder.jpg')"
+                                    class="img-fluid lazy-loading" 
+                                    alt="{{ product.product_name }}" />
+                            </a>
+                            <div class="wishlistIcon d-flex align-items-center">
+                                <img *ngIf="!(productservice.wishlistProductCheck(product))" src="assets/images/wishlist-icon.svg" class="w-100" alt="Wishlist">
+                                <img *ngIf="(productservice.wishlistProductCheck(product))" src="assets/images/wishlist-icon-solid.svg" class="w-100" alt="Wishlist">
+                            </div>
+                            <div class="row m-0 mt-3 productDetails align-items-center gx-0">
+                                <div class="col-6">
+                                    <a [routerLink]="product?.product_category_name === 'CONTACT' ? ['/contact-product/', product.product_slug] : ['/product/', product.product_slug]">
+                                        <p class="productName">{{ product?.product_name | titlecase }}</p>
+                                    </a>
+                                    <p class="productCode">{{ product?.product_sku }}</p>
+                                </div>
+                                <div class="col-6">
+                                    <div class="productPrice" *ngIf="product?.product_sale_price">
+
+                                        <span>{{ product?.product_retail_price |
+                                            currency:currency?.currency:'symbol'
+                                            }}</span>
+                                        {{ product?.product_sale_price |
+                                        currency:currency?.currency:'symbol'
+                                        }}
+                                    </div>
+                                    <div class="productPrice" *ngIf="product?.product_sale_price == null">
+                                        {{ product?.product_retail_price |
+                                        currency:currency?.currency:'symbol'}}
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</section>
+<!-- section end -->

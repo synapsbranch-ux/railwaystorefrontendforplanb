@@ -1,0 +1,413 @@
+<!-- <app-breadcrumb [title]="'Checkout'" [breadcrumb]="'Checkout'"></app-breadcrumb> -->
+<section class="section-b-space" [ngClass]="{'opercity-5': orderPrcessed}">
+    <div class="container padding-cls">
+        <div class="checkout-page">
+
+            <div class="checkout-form">
+                <form [formGroup]="checkoutForm" (ngSubmit)="placeorder()">
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <div class="title1 section-b-space">
+                                <h2>Checkout</h2>
+                            </div>
+                        </div>
+                        <div class="login-sec col-sm-12 pb-4" *ngIf="isUserLogin">
+                            <p>You need to login, to continue.. </p>
+                            <button type="button" (click)="checkoutLogin()"
+                                class="btn btn-solid rounded-lg">Login</button>
+                        </div>
+                        <div class="col-lg-7 col-sm-12 col-xs-12" [class.desabledform]="isUserLogin">
+                            <div class="checkout-details">
+                                <div class="checkout-title">
+                                    <h3>Billing Details</h3>
+                                    <p class="mb-1">Contact Information</p>
+                                    <p class="m-0">We'll use these details to keep you informed on your delivery.</p>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                        <div class="field-label">Email Address</div>
+                                        <input [(ngModel)]="email_" id="email_address" type="text"
+                                            formControlName="email" placeholder="" autocomplete="off">
+                                        <div *ngIf="email.invalid && (email.dirty || email.touched)"
+                                            class="text text-danger mt-1">
+                                            <div *ngIf="email.errors?.required">
+                                                Email is required.
+                                            </div>
+                                            <div *ngIf="email.errors?.email || email.errors?.pattern">
+                                                Please enter a valid email.
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group col-md-6 col-sm-6 col-xs-12">
+                                        <div class="field-label">Phone</div>
+                                        <input [(ngModel)]="phone_" id="phone_no" type="number" formControlName="phone"
+                                            placeholder="" autocomplete="off">
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <h5 style="font-weight: 600;">Please check a shipping and billing address below to
+                                        proceed:</h5>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="true">
+                                                    <mat-expansion-panel-header>
+                                                        <mat-panel-title>
+                                                            <h5 class="m-0">1. Shipping Address </h5>
+                                                        </mat-panel-title>
+                                                    </mat-expansion-panel-header>
+                                                    <div class="row">
+
+                                                        <div class="col-sm-6"
+                                                            *ngFor="let address of useraddressslist let i = index">
+
+                                                            <div class="radio-option d-flex align-items-start">
+                                                                <input *ngIf="address.is_default == 1" type="radio"
+                                                                    class="user_address_id"
+                                                                    id="userShippingAddressId{{i}}"
+                                                                    ngModel="{{address._id}}"
+                                                                    name="userShippingAddressId" value="{{address._id}}"
+                                                                    formControlName="userShippingAddressId">
+                                                                <input
+                                                                    *ngIf="address.is_default == 0 || address.is_default != 1"
+                                                                    type="radio" class="user_address_id"
+                                                                    id="userShippingAddressId{{i}}"
+                                                                    name="userShippingAddressId" value="{{address._id}}"
+                                                                    formControlName="userShippingAddressId">
+                                                                <label for="userShippingAddressId{{i}}">
+                                                                    <address>
+                                                                        <h4> {{address.user_full_name}} </h4>
+                                                                        <p>{{address.addressline1}},
+                                                                            {{address.addressline2}}</p>
+                                                                        <p>{{address.city}} - {{address.postal_code}}
+                                                                        </p>
+                                                                        <p>{{address.state}}</p>
+                                                                        <h5>Ph: {{address.mobile}}</h5>
+                                                                    </address>
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="linkaddress">
+                                                            <a class="add_address" (click)="checkaddress();">Add New
+                                                                adress</a><br>
+                                                        </div>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12">
+                                            <mat-accordion>
+                                                <mat-expansion-panel [expanded]="true">
+                                                    <mat-expansion-panel-header>
+                                                        <mat-panel-title>
+                                                            <h5 class="m-0">2. Billing Address</h5>
+                                                        </mat-panel-title>
+                                                    </mat-expansion-panel-header>
+                                                    <div class="row">
+                                                        <div class="col-sm-6"
+                                                            *ngFor="let address of useraddressslist let i = index">
+
+                                                            <div class="radio-option d-flex align-items-start">
+                                                                <input *ngIf="address.is_default == 1" type="radio"
+                                                                    class="user_address_id"
+                                                                    id="userBillingAddressId{{i}}"
+                                                                    ngModel="{{address._id}}"
+                                                                    name="userBillingAddressId" value="{{address._id}}"
+                                                                    formControlName="userBillingAddressId">
+                                                                <input
+                                                                    *ngIf="address.is_default == 0 || address.is_default != 1"
+                                                                    type="radio" class="user_address_id"
+                                                                    id="userBillingAddressId{{i}}"
+                                                                    name="userBillingAddressId" value="{{address._id}}"
+                                                                    formControlName="userBillingAddressId">
+                                                                <label for="userBillingAddressId{{i}}">
+                                                                    <address>
+                                                                        <h4> {{address.user_full_name}} </h4>
+                                                                        <p>{{address.addressline1}},
+                                                                            {{address.addressline2}}</p>
+                                                                        <p>{{address.city}} - {{address.postal_code}}
+                                                                        </p>
+                                                                        <p>{{address.state}}</p>
+                                                                        <h5>Ph: {{address.mobile}}</h5>
+                                                                    </address>
+                                                                </label>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="linkaddress">
+                                                            <a class="add_address" (click)="checkaddress();">Add New
+                                                                adress</a><br>
+                                                        </div>
+                                                    </div>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="col-lg-5 col-sm-12 col-xs-12" [class.desabledform]="isUserLogin">
+                            <div class="checkout-details">
+                                <div class="order-box">
+                                    <div class="title-box">
+                                        <div>Product <span> Total</span></div>
+                                    </div>
+                                    <ul class="qty" *ngIf='products.length'>
+                                        <li *ngFor="let product of products">
+                                            {{ product.product_name }} × {{ product.quantity }}
+                                            <span *ngIf="product.product_sale_price">
+                                                {{ (product.product_sale_price) * productService?.Currency.price |
+                                                currency:productService?.Currency.currency:'symbol' }} + {{
+                                                (product.addonsprice) |
+                                                currency:productService?.Currency.currency:'symbol' }}
+                                            </span>
+                                            <span *ngIf="product.product_sale_price == null">
+                                                {{ (product.product_retail_price) * productService?.Currency.price |
+                                                currency:productService?.Currency.currency:'symbol' }} + {{
+                                                (product.addonsprice) |
+                                                currency:productService?.Currency.currency:'symbol' }}
+                                            </span>
+
+                                        </li>
+                                    </ul>
+                                    <ul class="qty" *ngIf='!products.length'>
+                                        <li class="empty-checkout"> There are no products in cart </li>
+                                    </ul>
+                                    <ul class="sub-total">
+                                        <li>
+                                            Subtotal <span class="count">{{ getTotal | async |
+                                                currency:productService?.Currency.currency:'symbol'}}</span>
+                                        </li>
+                                        <li *ngIf="appliedCoupon">
+                                            Coupon Discount <span class="count text-success">- ${{ discountAmount
+                                                }}</span>
+                                        </li>
+                                        <li>Estimated Tax <span class="count">{{tax_percentage_value ? (((getTotal |
+                                                async) - discountAmount) * (tax_percentage_value / 100) | number:'1.2-2'
+                                                |
+                                                currency:productService?.Currency.currency:'symbol'): 0}}</span></li>
+                                        <li>Estimated Shipping <span class="count">{{shipping_charge_value ?
+                                                (shipping_charge_value |
+                                                currency:productService?.Currency.currency:'symbol') : 'Free'}}</span>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="total">
+                                        <li>Estimated Total <span class="count"> {{ (getTotal | async) + (((getTotal |
+                                                async) - discountAmount) * (tax_percentage_value / 100)) +
+                                                shipping_charge_value -
+                                                (discountAmount || 0) |
+                                                currency:productService?.Currency.currency:'symbol' }}</span></li>
+                                    </ul>
+
+
+
+                                    <ul class="total" *ngIf="!appliedCoupon">
+                                        <li>
+                                            <div class="card card-coupon" style="cursor: pointer;"
+                                                (click)="openCouponModal()">
+
+                                                <div
+                                                    class="card-body d-flex align-items-center justify-content-between">
+                                                    <div class="d-flex align-items-center">
+                                                        <i
+                                                            class="bi bi-ticket-perforated-fill text-primary fs-4 me-3"></i>
+                                                        <h6 class="mb-0 fw-semibold">Apply Coupon</h6>
+                                                    </div>
+                                                    <i class="bi bi-chevron-right fs-5 text-muted"></i>
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    </ul>
+
+                                    <ul class="total" *ngIf="appliedCoupon">
+                                        <li>
+                                            <div class="card card-coupon-applied shadow-sm border-1 mb-3">
+
+                                                <div class="card-body">
+
+                                                    <div class="d-flex justify-content-between align-items-center">
+
+                                                        <div class="d-flex align-items-center">
+                                                            <i
+                                                                class="bi bi-ticket-perforated-fill text-success fs-4 me-3"></i>
+                                                            <h6 class="mb-0 fw-bold">
+                                                                {{ appliedCoupon.coupon_name }}
+                                                            </h6>
+                                                        </div>
+
+                                                        <button class="btn btn-outline-danger btn-sm"
+                                                            (click)="removeCoupon()">
+                                                            Remove
+                                                        </button>
+
+                                                    </div>
+
+                                                    <p class="text-muted mt-2 mb-2 small" style="font-weight: 300;">
+                                                        Thank you! Your order total has been adjusted to reflect your
+                                                        discount.
+                                                    </p>
+
+                                                </div>
+
+                                            </div>
+                                        </li>
+                                    </ul>
+
+
+
+
+                                </div>
+
+                                <div class="payment-box">
+                                    <div class="upper-box">
+                                        <div class="payment-options" *ngIf="products.length > 0">
+                                            <!-- <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultUnchecked"
+                                                    name="paymentOption" value="COD" mdbInput
+                                                    formControlName="paymentOption" [disabled]="!products.length"
+                                                    (click)="getpaymentoption($event)">
+                                                <label class="custom-control-label" for="defaultUnchecked">Cash On
+                                                    Delivery</label>
+                                            </div> -->
+                                            <div class="custom-control custom-radio">
+                                                <input type="radio" class="custom-control-input" id="defaultUnchecked1"
+                                                    name="paymentOption" value="paypal" mdbInput
+                                                    formControlName="paymentOption" (click)="getpaymentoption($event)"
+                                                    [disabled]="!products.length">
+                                                <label class="custom-control-label" for="defaultUnchecked1">Pay (Please
+                                                    check Shipping and Billing Address buttons)</label>
+                                                <img [class.desabledform]="checkoutForm.invalid" class="image d-block"
+                                                    src="assets/images/paypal.png" alt="" />
+                                            </div>
+                                            <ngx-paypal *ngIf="paypalstatus" [config]="payPalConfig">
+                                            </ngx-paypal>
+                                        </div>
+                                        <img *ngIf="orderPrcessed" src="assets/images/animated_loader.gif" alt="loader"
+                                            class="loading">
+                                    </div>
+                                    <div class="text-right">
+                                        <button type="submit" *ngIf="!paypalstatus"
+                                            [disabled]="checkoutForm.invalid || isSubmitting || !products.length || !paypalstatus"
+                                            class="loginBtn btn">
+                                            Place Order
+                                        </button>
+                                        <!-- <button type="submit" *ngIf="!paypalstatus"
+                                            [disabled]="checkoutForm.invalid || isSubmitting || !products.length"
+                                            class="loginBtn btn">
+                                            Place Order
+                                        </button> -->
+
+                                        <div [className]="orderValid ? 'alert mt-3 alert-success' : 'alert mt-3 alert-danger'"
+                                            role="alert" *ngIf="orderValid">
+                                            <div class="d-flex align-items-center"><span *ngIf="orderValid"><i
+                                                        class="fa fa-spinner fa-spin" style="font-size:24px"></i>
+                                                    &nbsp;</span>{{orderMassage}}</div>
+                                            <!-- <ngx-paypal [config]="payPalConfig" *ngIf="payment == 'Paypal'"></ngx-paypal> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+
+<!-- Coupon Modal -->
+<div class="modal fade" *ngIf="showCouponModal" [class.show]="showCouponModal" style="display: block;">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header" style="border-bottom: none;">
+                <button type="button" class="btn-close" (click)="closeCouponModal()"></button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="mb-3">
+                    <div class="position-relative">
+                        <input class="form-control search-coupon" (keyup)="applyFilter($event)"
+                            placeholder="Enter Coupon Code/Name" [(ngModel)]="couponInput">
+                        <span *ngIf="couponInput" class="apply-text" (click)="applyTypedCoupon()">
+                            Apply
+                        </span>
+                    </div>
+                    <p style="color: red;" class="mt-2" *ngIf="searchBoxApplyError">{{searchBoxApplyError}}</p>
+                </div>
+
+                <div class="mb-3">
+                    <div class="card shadow-sm border-1 mb-3" *ngFor="let coupon of couponlist; let i = index">
+
+                        <div class="card-body">
+
+                            <!-- Top Row -->
+                            <div class="d-flex justify-content-between align-items-center">
+
+                                <!-- Logo + Name -->
+                                <div class="d-flex align-items-center">
+                                    <i class="bi bi-ticket-perforated-fill text-primary fs-4 me-3"></i>
+                                    <h6 class="mb-0 fw-bold">{{ coupon.coupon_name }}</h6>
+                                </div>
+
+                                <!-- Apply Button -->
+                                <button class="btn btn-outline-primary btn-sm" (click)="applyCoupon(coupon, i)">
+                                    Apply
+                                </button>
+
+                            </div>
+
+                            <!-- Short Description -->
+                            <p class="text-muted mt-2 mb-2 small" *ngIf="!hideShortDescription">
+                                {{ coupon.description.split('\n')[0] }}
+                                <!-- Show only the first line as short description -->
+                            </p>
+
+                            <!-- More Details -->
+                            <button class="btn btn-sm btn-link text-dark p-0 text-decoration-none fw-semibold"
+                                style="font-size: 12px;" (click)="toggleDetails(i)">
+
+                                {{ coupon.expanded ? 'Hide Details' : 'View Details' }}
+
+                                <i class="bi" [ngClass]="coupon.expanded ? 'bi-chevron-up' : 'bi-chevron-down'">
+                                </i>
+
+                            </button>
+
+                            <!-- Expandable Section -->
+                            <div *ngIf="coupon.expanded" class="mt-2 small text-muted">
+                                <div style="white-space: pre-line;">
+                                    {{ coupon.description }}
+                                </div>
+                            </div>
+
+                            <div *ngIf="coupon.errorMessage" class="text-danger small mt-1">
+                                {{ coupon.errorMessage }}
+                            </div>
+
+                        </div>
+                    </div>
+
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<!-- Backdrop -->
+<div class="modal-backdrop fade show" *ngIf="showCouponModal"></div>

@@ -1,0 +1,165 @@
+<div class="icon-nav">
+  <ul class="d-flex align-items-center">
+    <!-- <li class="onhover-div mobile-search search-widgets" id="search-widgets">
+      <div (click)="searchToggle()">
+        <img src="assets/images/icon/search.png" class="img-fluid" alt="">
+        <i class="ti-search"></i>
+      </div>
+      <div id="search-overlay" class="search-overlay" [ngStyle]="{'display': search ? 'block' : 'none' }">
+        <div>
+          <span class="closebtn" title="Close Overlay" (click)="searchToggle()">×</span>
+          <div class="overlay-content">
+            <div class="container">
+              <div class="row">
+                <div class="col-xl-12">
+                  <form>
+                    <div class="form-group">
+                      <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Search a Product">
+                    </div>
+                    <button type="submit" class="btn btn-primary"><i class="fa fa-search"></i></button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </li> -->
+    <!-- <li class="onhover-div mobile-setting">
+      <div><img src="assets/images/icon/setting.png" class="img-fluid" alt="settong">
+        <i class="ti-settings"></i></div>
+      <div class="show-div setting">
+        <h6>language</h6>
+        <ul>
+          <li *ngFor="let language of languages">
+            <a href="javascript:void(0)" (click)="changeLanguage(language.code)">{{ language.name }}</a>
+          </li>
+        </ul>
+        <h6>currency</h6>
+        <ul class="list-inline">
+          <li *ngFor="let currency of currencies">
+            <a href="javascript:void(0)" (click)="changeCurrency(currency)">{{ currency.name }}</a>
+          </li>
+        </ul>
+      </div>
+    </li> -->
+    <li class="onhover-dropdown mobile-account account">
+      <!-- <a href="javascript:void(0)" class="d-flex align-items-center justify-content-between"> -->
+        <!-- <i class="fa fa-user-o" aria-hidden="true"></i>  -->
+        <!-- <img src="assets/images/user.svg" alt="User" width="18">
+        My Account
+      </a> -->
+
+      <button style="border: none; background-color: white; padding: 0; font-weight: 600; gap: 10px;" href="javascript:void(0)" class="d-flex align-items-center justify-content-between">
+        <!-- <i class="fa fa-user-o" aria-hidden="true"></i>  -->
+        <img src="assets/images/user.svg" alt="User" width="18px" height="100%">
+        My Account
+      </button>
+
+      <ul class="onhover-show-div">
+        <li *ngIf="!user_">
+          <a class="loginBtn" [routerLink]="['/login']" data-lng="en">
+            Log In
+          </a>
+        </li>
+        <li *ngIf="!user_">
+          <a class="createBtn" [routerLink]="['/register']" data-lng="en">
+            Create Account
+          </a>
+        </li>
+        <li *ngIf="user_">
+          <a [routerLink]="['/dashboard']">
+            Profile
+          </a>
+        </li>
+        <!-- <li *ngIf="user_" (click)="logout();">
+          <a data-lng="es">
+            Logout
+          </a>
+        </li> -->
+        <li *ngIf="user_">
+          <a href="#" (click)="logout();" data-lng="es">
+            Logout
+          </a>
+        </li>
+      </ul>
+    </li>
+    <li class="onhover-div mobile-wishlist">
+      <div>
+        <a [routerLink]="['/wishlist']">
+          <!-- <i class="fa fa-heart-o" aria-hidden="true"></i> -->
+          <img src="assets/images/wishlist-icon.svg" alt="wishlist" width="18">
+          <!-- Wishlist -->
+        </a>
+      </div>
+    </li>
+    <li class="onhover-div mobile-cart">
+      <div>
+        <a [routerLink]="['/cart']">
+          <img src="assets/images/shopping-cart.svg" alt="cart" width="18">
+          <!-- <img src="assets/images/icon/cart.png" class="img-fluid" alt=""> -->
+          <!-- <i class="fa fa-shopping-bag"></i>  -->
+          <!-- My Cart -->
+        </a>
+      </div>
+      <span class="cart_qty_cls">{{products? products.length : 0 }}</span>
+      <ul class="show-div shopping-cart" *ngIf='!products'>
+        <h5>Your cart is currently empty.</h5>
+      </ul>
+      <ul class="show-div shopping-cart" *ngIf='products'>
+        <li *ngFor="let product of products">
+          <div class="media flex">
+            <a [routerLink]="['/product/', product.product_slug]">
+              <img class="mr-3"
+                [src]="product.product_image[0]? product.product_image[0].pro_image : 'assets/images/product/placeholder.jpg'"
+                [alt]="product?.product_name">
+            </a>
+            <div class="media-body">
+              <a [routerLink]="['/product/', product.product_slug]">
+                <h4>{{ product?.product_name }}</h4>
+              </a>
+              <h4>
+                <span>
+                  {{ product?.quantity }} x
+                  {{((product.product_sale_price)? product?.product_sale_price: product?.product_retail_price) |
+                  currency: product_service.Currency?.currency:'symbol'}} + {{ (getTotalAddons | async) | currency:
+                  product_service.Currency?.currency:'symbol'}}
+
+                </span>
+                <!-- <span *ngIf="product?.product_sale_price == null">
+                  {{ product?.quantity }} x
+                  {{ (product?.product_retail_price + product.addonsprice) | currency:
+                  product_service.Currency?.currency:'symbol'}}
+
+                </span> -->
+              </h4>
+            </div>
+          </div>
+          <div *ngIf="!user_" class="close-circle" (click)="removeItem(product)">
+            <!-- <a href="javascript:void(0)"><i class="fa fa-times" aria-hidden="true"></i></a> -->
+            <button style="border: none; background-color: white;"><i class="fa fa-times" aria-hidden="true"></i></button>
+          </div>
+        </li>
+        <li>
+          <div class="total">
+            <h5>subtotal : <span>{{ getTotal | async | currency:product_service?.Currency.currency:'symbol' }}</span>
+            </h5>
+          </div>
+        </li>
+        <li>
+          <div class="buttons">
+            <a [routerLink]="['/cart']" class="view-cart">view cart</a>
+            <a [routerLink]="['/checkout']" class="checkout">checkout</a>
+          </div>
+        </li>
+      </ul>
+    </li>
+    <!-- <li class="onhover-div mobile-virtualstore">
+      <div>
+        <a href="https://store.ralbatech.com/puma-mumbai-store/puma-ladies-hand-bags" target="_blank">
+          <i class="fa fa-cubes" aria-hidden="true"></i>Virtual Studio
+        </a>
+      </div>
+    </li> -->
+  </ul>
+</div>

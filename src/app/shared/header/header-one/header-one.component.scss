@@ -1,0 +1,45 @@
+@media only screen and (max-width: 1199px) {
+    .main-menu {
+        .menu-center {
+            width: 50%;
+            position: unset;
+        }
+    }
+
+    .dashboard-left {
+        padding: 0 15px !important;
+    }
+}
+
+@media only screen and (max-width: 991px) {
+    .main-menu {
+        .menu-center {
+            position: absolute;
+            top: 80px;
+            width: 100%;
+        }
+    }
+
+    .dashboard-left {
+        padding: 0 15px !important;
+    }
+}
+
+@media only screen and (max-width: 577px) {
+    .main-menu {
+        .menu-center {
+            position: unset;
+            width: 100%;
+        }
+
+        .brand-logo {
+            width: 80px;
+        }
+    }
+}
+
+#headerlogo small
+{
+    text-align: center;
+    display: block;
+}

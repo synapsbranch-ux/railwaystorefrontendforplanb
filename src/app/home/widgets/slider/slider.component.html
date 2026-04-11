@@ -1,0 +1,52 @@
+<owl-carousel-o [options]="HomeSliderConfig" class="home-slider" [ngClass]="class">
+    <ng-container *ngFor="let slider of sliders">
+        <ng-template carouselSlide>
+            <div class="home" [ngClass]="textClass"
+                [ngStyle]="{'background-image': 'url('+slider.banner_background_image+')'}">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">
+                            <div class="slider-contain">
+                                <!-- <div class="text-left">
+                                    <h1 [style.color]="slider.banner_title_color">{{slider.banner_title}}</h1>
+                                    <p [style.color]="slider.banner_subtitle_color">{{slider.banner_subtitle}}</p>
+                                    <a *ngIf="slider.banner_store" href="{{envstore}}/{{slider.banner_store}}/1"
+                                        [style.color]="slider.banner_button_text_color"
+                                        [style.background-color]="slider.banner_button_bg_color" class="btn rounded-lg">
+                                        {{buttonText}}
+                                    </a>
+                                    <span *ngIf="slider.banner_main_category">
+                                        <span *ngIf="slider.banner_sub_categories.length > 0">
+                                            <span *ngFor="let subcat of slider.banner_sub_categories">
+                                                <a *ngIf="subcat" (click)="vandorbannerClick(subcat)"
+                                                    [style.color]="slider.banner_button_text_color"
+                                                    [style.background-color]="slider.banner_button_bg_color"
+                                                    class="btn rounded-lg">
+                                                    {{subcat.category_name}}
+                                                </a>
+                                            </span>
+                                        </span>
+                                        <span>
+                                            <button *ngIf="storeVisiblity" (click)="redirectStore()"
+                                                [style.color]="slider.banner_button_text_color"
+                                                [style.background-color]="slider.banner_button_bg_color"
+                                                class="btn rounded-lg">
+                                                Virtual Tour
+                                            </button>
+                                            <button *ngIf="isVisable2Dstore" (click)="redirec2dtStore()"
+                                                [style.color]="slider.banner_button_text_color"
+                                                [style.background-color]="slider.banner_button_bg_color"
+                                                class="btn rounded-lg">
+                                                2-D Display
+                                            </button>
+                                        </span>
+                                    </span>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </ng-container>
+</owl-carousel-o>

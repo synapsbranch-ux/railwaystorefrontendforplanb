@@ -1,0 +1,38 @@
+<div class="upload-section text-center align-items-center justify-content-center" [ngClass]="imageUrl ? 'd-none' : ''" >
+    <input type="file" (change)="onFileSelected($event)" accept="image/*">
+    <!-- <img *ngIf="imageUrl" [src]="imageUrl" alt="Uploaded Image"> -->
+</div>
+
+<main id="face-mask-app">
+    <!-- <div class="form-control webcam-start" id="webcam-control">
+            <label class="form-switch">
+            <input type="checkbox" id="webcam-switch">
+            <i></i> 
+            <span id="webcam-caption">Click to Start Camera</span>
+            </label>    
+            <button id="capture">Capture</button>  
+    </div> -->
+    <div id="image-container">
+        <img id="faces"   src="{{imageUrl}}">
+        <div id="canvas"></div>
+        <div class="loading d-none">
+            Loading Model
+            <div class="spinner-border" role="status">
+                <span class="sr-only"></span>
+            </div>
+        </div>
+    
+
+        <div id="mask-slider" style="display: none;">
+            <img id="arrowLeft" src="assets/images/arrow-left.png">
+            <div id="mask-list" >
+                <ul>
+                    <li class="selected-mask"><img src="{{seletedimage}}" class="full-mask" data-mask-type="eye" data-scale-width="1.1" data-scale-height=".3" data-top-adj="0.15" data-left-adj=".9"></li>
+                    <li><img src="assets/images/eyeglass.png" class="full-mask" data-mask-type="eye" data-scale-width="1.1" data-scale-height=".3" data-top-adj="0.15" data-left-adj=".7"></li>
+                </ul>
+            </div>
+            <img id="arrowRight" src="assets/images/arrow-right.png">
+        </div>
+    </div>
+    <div class="md-overlay"></div>
+</main>

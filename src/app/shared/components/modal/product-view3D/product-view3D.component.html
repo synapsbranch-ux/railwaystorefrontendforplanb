@@ -1,0 +1,80 @@
+<ng-template class="theme-modal" #view3D let-modal>
+	<div class="modal-content">
+		<div class="modal-header">
+			<a type="button" class="close" data-dismiss="modal" aria-label="Close"
+				(click)="modal.dismiss('Cross click')">
+				<span aria-hidden="true">&times;</span>
+			</a>
+		</div>
+		<div class="row row-centered justify-content-center ">
+			<div class="col-md-12 col-centered pt-3">
+				<div class="d-flex align-items-center justify-content-center mb-3">
+					<button *ngIf="is3DProduct || mode =='video'" class="btn btn-solid rounded-lg virtual_btn mr-3" [ngClass]="mode =='video' ? 'active' : ''"
+						(click)="modeChage('video')"> Video Mode</button>
+					<button *ngIf="mode =='image'" class="btn btn-solid rounded-lg virtual_btn" [ngClass]="mode =='image' ? 'active' : ''"
+						(click)="modeChage('image')">Image Mode</button>
+				</div>
+			</div>
+		</div>
+		<div class="modal-body">
+			<div class="row row-centered justify-content-center">
+				<div class="col-md-12 col-centered" *ngIf="!showHelp">
+					<div class="video-section" [ngClass]="mode =='video' ? 'd-block' : 'd-none'">
+						<!-- <p class="text-center text-threedtryon f-15">This virtual model may have been created using AI to approximate style and fit.</p> -->
+						<iframe *ngIf="iframeLink" [src]="iframeLink" frameborder="0" allow="camera; fullscreen 'self'"
+							height="100%" width="100%"></iframe>
+					</div>
+					<div class="image-section" *ngIf="mode === 'image'" mh-500>
+						<div [ngStyle]="imageUrl ? {'min-height': '0px'} : {'min-height': '350px'}">
+
+							<div class="upload-section text-center align-items-center justify-content-center">
+
+								<!-- Show face capture only if no selfie yet -->
+								<app-face-capture *ngIf="showFaceCapture" (selfieCaptured)="onSelfieCaptured($event)">
+								</app-face-capture>
+
+								<!-- Show captured selfie -->
+								<div *ngIf="imageUrl">
+									<!-- <img [src]="imageUrl" alt="Selfie" /> -->
+
+									<!-- Retake option -->
+									<button class="btn btn-outline-secondary mb-4" (click)="retakeSelfie()"
+										[disabled]="!isGlassReady">
+										🔄 Retake
+									</button>
+									<p class="text-center text-threedtryon f-15">Drag eyglass to adjust if not properly aligned.</p>
+								</div>
+
+							</div>
+
+
+							<!-- Your glass try-on container -->
+							<main id="face-mask-app" #contentImageContainer [innerHTML]="modelImageHTML">
+							</main>
+						</div>
+					</div>
+					
+					<!-- Help instruction at bottom -->
+					<div *ngIf="!showHelp && mode === 'image'" class="text-center mt-3">
+						<p class="text-black mb-0">
+							Line up the green vertical line over your nose, and the horizontal line across your eyes. Press the  <i class="fa fa-question-circle text-success"></i>  mark for illustration.
+						</p>
+					</div>
+					
+					<button *ngIf="!showHelp && mode === 'image'" class="btn btn-link position-absolute show-help" (click)="toggleHelp()"
+						ngbTooltip="Help: How to try on">
+						<i class="fa fa-question-circle text-success fs-4"></i>
+					</button>
+				</div>
+				<div class="col-md-12 col-centered d-flex flex-column align-items-center" *ngIf="showHelp && mode === 'image'">
+					<img class="img-fluid mb-2 w-50" src="assets/images/shape_lineup_help.png" alt="help image">
+					<p class="text-center mt-3 text-black">Line up the green vertical line over your nose, and the horizontal line across your eyes.'The picture can be taken once the oval border turns green.'</p>
+					<button class="btn btn-solid rounded-lg virtual_btn active" (click)="startTryOn()">
+						Start
+					</button>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</ng-template>

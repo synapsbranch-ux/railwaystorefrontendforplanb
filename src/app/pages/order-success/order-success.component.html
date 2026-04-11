@@ -1,0 +1,162 @@
+<!-- thank-you section start -->
+<section class="section-b-space light-layout">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="success-text">
+                    <i class="fa fa-check-circle" aria-hidden="true"></i>
+                    <h2>thank you</h2>
+                    <p>Payment is successfully processsed and your order is on the way</p>
+                    <p>Transaction ID: {{transaction_id}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<!-- Section ends -->
+<!-- order-detail section start -->
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="product-order">
+                    <h3 class="mb-4">your order details</h3>
+
+                    <div class="row">
+                        <div class="col-lg-12 table-responsive">
+                            <table class="w-100 table">
+                                <tr>
+                                    <th class="pb-3">Product Image</th>
+                                    <th class="pb-3">Product Name</th>
+                                    <th class="pb-3">Quantity</th>
+                                    <th class="pb-3 text-right">Price</th>
+                                </tr>
+                                <tr *ngFor="let product of oderProducts">
+                                    <td>
+                                        <img class="img-fluid product_img" [src]="product.product_image"
+                                            [alt]="product.product_name">
+                                    </td>
+                                    <td>{{ product.product_name | titlecase }}</td>
+                                    <td>{{product.qty}}</td>
+                                    <td class="text-right">{{product.price |
+                                        currency:product_service?.Currency.currency:'symbol'}}</td>
+                                </tr>
+                                <tfoot class="table">
+                                    <tr>
+                                        <td colspan="5" class="text-right"><strong>Subtotal:</strong>
+                                            {{ total_order_amount - (tax_percentage_value + shipping_charge_value) +
+                                            discount |
+                                            currency:product_service?.Currency.currency:'symbol' }}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right text-success"><strong>Discount:</strong>
+                                            -{{discount |
+                                            currency:product_service?.Currency.currency:'symbol'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right"><strong>Tax Amount:</strong>
+                                            {{tax_percentage_value |
+                                            currency:product_service?.Currency.currency:'symbol'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right"><strong>Shipping Charge:</strong>
+                                            {{shipping_charge_value |
+                                            currency:product_service?.Currency.currency:'symbol'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right"><strong>Total:</strong>
+                                            {{total_order_amount |
+                                            currency:product_service?.Currency.currency:'symbol'}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td colspan="5" class="text-right"><strong>Order Status:</strong> {{
+                                            order_status | uppercase }}
+                                        </td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- <div class="row product-order-detail" *ngFor="let product of oderProducts">
+                        <div class="col-3">
+                                <img class="img-fluid" [src]="product.product_image" [alt]="product.product_name">
+                        </div>
+                        <div class="col-3 order_detail">
+                            <div>
+                                <h4>product name</h4>
+                                <h5>{{ product.product_name | titlecase }}</h5>
+                            </div>
+                        </div>
+                        <div class="col-3 order_detail">
+                            <div>
+                                <h4>quantity</h4>
+                                <h5>{{product.qty}}</h5>
+                            </div>
+                        </div>
+                        <div class="col-3 order_detail">
+                            <div>
+                                <h4>price</h4>
+                                <h5>{{product.price}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="total-sec">
+                        <ul>
+                            <li>subtotal <span>{{total_order_amount}}</span></li>
+                        </ul>
+                    </div>
+                    <ul class="final-total pb-4">
+                        <li>Total: <h3 class="text-black">{{total_order_amount | currency}}</h3></li>
+                    </ul>
+                    <ul class="order-detail">
+                        <li>Order Status: <h3 class="text-black">{{ order_status | uppercase }}</h3></li>
+                    </ul> -->
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="row order-success-sec">
+                    <div class="col-sm-6">
+                        <h4>summary</h4>
+                        <hr>
+                        <ul class="order-detail">
+                            <li><span>Order ID:</span> {{order_id}}</li>
+                            <li><span>Order Date:</span> {{ createdAt | date:'MMMM d, y'}}</li>
+                            <li><span>Order Total:</span> {{total_order_amount}}</li>
+                        </ul>
+
+                    </div>
+                    <div class="col-sm-6">
+                        <h4>shipping address</h4>
+                        <hr>
+                        <ul class="order-detail">
+                            <li>{{orderAddress?.user_full_name}}</li>
+                            <li>{{orderAddress?.addressline1}}</li>
+                            <li>{{orderAddress?.addressline2}}</li>
+                            <li>{{orderAddress?.city}}</li>
+                            <li>{{orderAddress?.state}} - {{orderAddress?.postal_code}}</li>
+                            <li>Contact No. {{orderAddress?.mobile}}</li>
+                        </ul>
+                    </div>
+
+                    <div class="col-sm-12 payment-mode">
+                        <h4>payment method</h4>
+                        <hr>
+                        <p><span>{{payment_method}}</span></p>
+                        <p *ngIf="payment_method == 'COD'">Pay on Delivery (Cash/Card). Cash on delivery (COD)
+                            available. Card/Net banking acceptance subject to device availability.</p>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="delivery-sec">
+                            <h3>expected date of delivery</h3>
+                            <h2>{{expected_delivery | date:'MMMM d, y'}}</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!-- Section ends -->

@@ -1,0 +1,19 @@
+<div class="container">
+    <div class="row row-centered justify-content-center">
+        <div class="col-md-12 col-centered">
+            <div class="d-flex align-items-center justify-content-center mb-3">
+                <button [disabled]="!videomodestatus" class="btn btn-solid rounded-lg virtual_btn mr-3" [ngClass]="mode =='video' ? 'active' : ''" (click)="modeChage('video')"> Video Mode</button>
+                <button [disabled]="!imagemodestatus" class="btn btn-solid rounded-lg virtual_btn" [ngClass]="mode =='image' ? 'active' : ''" (click)="modeChage('image')">Image Mode</button>
+            </div>
+        </div>
+        <div class="col-md-9 col-centered">
+
+        <div class="video-section" [ngClass]="mode =='video' ? 'd-block' : 'd-none'">
+                <app-video-mode></app-video-mode>
+            </div>
+            <div class="image-section" [ngClass]="mode =='image' ? 'd-block': 'd-none'">
+                <app-image-mode></app-image-mode>
+            </div>
+    </div>
+</div>
+</div>

@@ -1,0 +1,44 @@
+.cart-section tbody tr td a,
+.cart-section tbody tr td p,
+.wishlist-section tbody tr td a,
+.wishlist-section tbody tr td p {
+  font-size: 20px;
+}
+
+.wishlist-section tbody tr td h2 {
+  font-size: 18px;
+}
+
+.product-img {
+  max-width: 130px;
+}
+.loginBtn {
+  background-color: #1E3799;
+  border-radius: 50px;
+  color: #fff !important;
+  padding: 12px 15px;
+  border: 1px solid transparent;
+  min-width: 120px;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: capitalize;
+  text-align: center;
+  &:hover{
+      background-color: #182c79;
+  }
+}
+.createBtn {
+  border: 1px solid #1E3799;
+  border-radius: 50px;
+  color: #1E3799 !important;
+  padding: 12px 15px;
+  min-width: 120px;
+  text-decoration: none;
+  display: inline-block;
+  text-transform: capitalize;
+  text-align: center;
+  &:hover{
+      background-color: #182c79;
+      color: #fff !important;
+  }
+}

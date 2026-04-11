@@ -1,0 +1,38 @@
+<app-header-one [sticky]="true">
+</app-header-one>
+<div class="title1 section-t-space section-b-space-2">
+    <h2>stores</h2>
+    <h4 class="title-inner1">Online Shopping that Keeps it Real!</h4>
+</div>
+<section class="p-t-0 section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="img-wrapper">
+                    <div class="front">
+                        <img [src]="ImageSrc ? ImageSrc : storeimgUrl" class="img-fluid lazy-loading w-100" alt="product_name" />
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="mt-4">
+                    <h3 class="text-black">{{storename}}</h3>
+                    <p *ngIf="DepartmentsList.length">Choose Department for Store</p>
+                    <div class="department-list overflow-auto">
+                        <div class="d-flex  d-lists">
+                            <div class="d-flex flex-column text-center storeside-img" *ngFor="let department of DepartmentsList let i = index">
+                                <div *ngIf="roomavailablity[i] == 'false'" class="store-image" style="background-image: url({{department.department_image}})" (click)=stordepartment(department.department_slug,roomavailablity[i])></div>
+                                <small *ngIf="roomavailablity[i] == 'false'">{{department.department_name}}</small>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <h3 *ngIf="!DepartmentsList.length" class="text-danger">{{departmentmsg}}</h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-footer-one></app-footer-one>

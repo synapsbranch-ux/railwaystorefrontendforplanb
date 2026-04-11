@@ -1,0 +1,101 @@
+.video-container {
+  position: relative;
+  width: 100%;
+  max-width: 640px;
+  aspect-ratio: 4 / 3;
+  margin: 40px auto;
+  background-color: #000;
+  overflow: hidden;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+video,
+canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Selfie button */
+.selfie-button {
+  position: absolute;
+  bottom: 5px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  padding: 8px 15px;
+  font-size: 16px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease;
+}
+
+.selfie-button:hover {
+  background-color: #218838;
+}
+
+/* Captured selfie preview */
+.video-container img {
+  max-width: 100%;
+  border-radius: 8px;
+  margin-top: 10px;
+  z-index: 4;
+}
+
+/* Oval overlay (optional dashed outline for debugging only) */
+.oval-outline {
+  position: absolute;
+  width: 47%;
+  height: 84%;
+  top: 8%;
+  left: 26.5%;
+  border: 4px dashed red;
+  border-radius: 50% / 60%;
+  z-index: 2;
+  pointer-events: none;
+  transition: border-color 0.3s ease;
+}
+
+/* Instruction text */
+.alignment-hint {
+  text-align: center;
+  margin-top: 12px;
+  font-size: 15px;
+  color: #28a745;
+  font-weight: 500;
+  padding: 0 12px;
+  line-height: 1.4;
+}
+
+.countdown-overlay {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 5rem;
+  color: lime;
+  font-weight: bold;
+  z-index: 10;
+  animation: popIn 0.3s ease;
+}
+
+@keyframes popIn {
+  0% {
+    transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+  }
+}

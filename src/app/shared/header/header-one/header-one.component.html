@@ -1,0 +1,109 @@
+<header class="sticky" [ngClass]="class" [class.fixed]="stick && sticky">
+    <div class="mobile-fix-option"></div>
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12 d-none d-lg-block">
+                <div class="main-menu">
+                    <div class="menu-left">
+                        <!-- <app-left-menu></app-left-menu> -->
+                        <div class="brand-logo">
+                            <a *ngIf="!vendorhome" routerLink="/" id="headerlogo">
+                                <img [src]="themeLogo" class="img-fluid" alt="logo">
+                            </a>
+                            <a *ngIf="vendorhome" routerLink="/vendor/{{store_slug}}" id="headerlogo">
+                                <img *ngIf="isvendorlogoimage || !islogo" [src]="themeLogo" class="img-fluid" alt="logo">
+                                <h2 *ngIf="!isvendorlogoimage && islogo">{{themeLogo}}</h2>
+                                <small *ngIf="islogo">Powered by Ralba Technologies</small>
+                            </a>
+                        </div>
+                    </div>
+                    <div class="menu-center">
+                        <!-- <a class="btn btn-solid rounded-lg virtual_btn" href="https://store.ralbatech.com/puma-mumbai-store/puma-ladies-hand-bags" target="_blank" >VIRTUAL STUDIO</a> -->
+                        <!-- <a class="btn btn-solid rounded-lg virtual_btn" [routerLink]="['/pages/3dstore']" routerLinkActive="router-link-active"  >VIRTUAL STUDIO</a> -->
+                        <form class="ml-3">
+                            <div class="input-group">
+                                <div class="input-group-prepend d-flex">
+                                    <span class="input-group-text"><i class="fa fa-search"
+                                            aria-hidden="true"></i></span>
+                                    <input type="text" class="form-control"
+                                        (keyup.enter)="getSearchVAl($event.target.value)"
+                                        placeholder="Search anything here">
+                                </div>
+
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="menu-right pull-right">
+                        <div>
+                            <app-menu></app-menu>
+                        </div>
+                        <div>
+                            <app-settings></app-settings>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- mobile menu -->
+            <div class="col-12 d-block d-lg-none">
+                <div class="w-100 d-flex align-items-center justify-content-between">
+                    <div class="brand-logo">
+                        <a *ngIf="!vendorhome" routerLink="/" id="headerlogo">
+                            <img [src]="themeLogo" class="img-fluid" alt="logo">
+                        </a>
+                        <a *ngIf="vendorhome" routerLink="/vendor/{{store_slug}}" id="headerlogo">
+                            <img *ngIf="isvendorlogoimage || !islogo" [src]="themeLogo" class="img-fluid" alt="logo">
+                            <h2 *ngIf="!isvendorlogoimage && islogo">{{themeLogo}}</h2>
+                            <small *ngIf="islogo">Powered by Ralba Technologies</small>
+                        </a>
+                    </div>
+                    <div>
+                        <ul class="mobileMenuList">
+                            <li>
+                                <a routerLink="/search"> <img src="assets/images/search.svg" width="20" alt="search"></a>
+                            </li>
+                            <li>
+                                <a routerLink="/dashboard"><img src="assets/images/user.svg" width="20" alt="user"></a>
+                            </li>
+                            <li>
+                                <a routerLink="/wishlist"><img src="assets/images/wishlist-icon.svg" width="20" alt="wishlist"></a>
+                            </li>
+                            <li class="onhover-div mobile-cart">
+                                <div>
+                                    <a routerLink="/cart">
+                                        <img src="assets/images/shopping-cart.svg" width="20" alt="cart">
+                                    </a>
+                                </div>
+                                <span class="cart_qty_cls">{{products? products.length : 0 }}</span>
+
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="w-100 text-center">
+                    <ul class="mobileMenuList">
+                        <li *ngFor="let menu of menuarr"><a *ngIf="menu.category_slug != 'contact'"
+                                routerLink="/all-products/{{store_slug}}/{{menu.category_slug}}"
+                                routerLinkActive="active">{{menu.category_name}}</a>
+                            <a *ngIf="menu.category_slug == 'contact'" routerLink="/contact-products/{{store_slug}}"
+                                routerLinkActive="active">{{menu.category_name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <!-- <div class="bottom-header">
+    <div class="container">
+      <div class="row">
+        <div class="col-12">
+            <app-menu></app-menu>
+        </div>
+      </div>
+    </div>
+  </div> -->
+
+</header>

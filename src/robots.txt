@@ -1,0 +1,27 @@
+# robots.txt for https://ralbatech.com/
+
+# Allow all well-behaved bots to crawl all pages by default
+User-agent: *
+
+# Block admin or sensitive directories
+# Disallow: /admin/
+# Disallow: /private/
+# Disallow: /tmp/
+# Disallow: /cgi-bin/
+
+# Block parameters or search pages (if applicable)
+# Disallow: /?sessionid=*
+# Disallow: /search/
+
+# Optional: Block other file types not helpful for SEO
+# Disallow: /*.pdf$
+# Disallow: /*.zip$
+# Disallow: /*.doc$
+
+# Ensure CSS, JS, and image files can be crawled for proper rendering
+Allow: /*.css$
+Allow: /*.js$
+Allow: /images/
+
+# Add your sitemap to help crawlers find important pages
+Sitemap: https://ralbatech.com/sitemap.xml

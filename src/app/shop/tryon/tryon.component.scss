@@ -1,0 +1,24 @@
+.image-section{
+    background-color: #d3d3d3;
+    border-radius: 15px;
+    min-height: 300px;
+    position: relative;
+    overflow: hidden;
+}
+.video-section{
+    background-color: #d3d3d3;
+    border-radius: 15px;
+    min-height: 500px;
+    position: relative;
+    overflow: hidden;
+}
+.video-section video{
+    left: 0 !important;
+}
+.active{
+    background: #fff;
+    color: #000;
+}
+@media only screen and (max-width: 600px) {
+    .video-section{min-height: 480px;}
+}

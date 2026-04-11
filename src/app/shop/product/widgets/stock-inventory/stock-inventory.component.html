@@ -1,0 +1,11 @@
+<div class="pro_inventory" *ngIf="stock <= 5">
+    <p class="active" *ngIf="stock >= 0">
+        Hurry! We have only {{ stock }} product in stock.
+    </p>
+    <p class="active" *ngIf="stock <= 0">
+        <span class="text-danger">Sorry, stock is empty.</span>
+    </p>
+    <div class="inventory-scroll nostripes active">
+        <span style="width: 95%;"></span>
+    </div>
+</div>

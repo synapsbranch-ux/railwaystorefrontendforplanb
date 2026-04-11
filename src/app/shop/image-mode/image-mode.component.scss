@@ -1,0 +1,37 @@
+img{
+    width: 100%;
+}
+.loading{
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 24px;
+}
+.spinner-border{
+    width: 15rem;
+    height: 15rem;
+    position: absolute;
+}
+.upload-section{
+    min-height: 270px;
+    display: flex;
+}
+.upload-section input{
+    background: #f9f9f9;
+    border-radius: 12px;
+    padding: 5px;
+}
+.upload-section input::file-selector-button {
+    font-weight: bold;
+    color: #fff;
+    padding: 0.5em;
+    background-color: #1b7cbf;
+    border: none;
+    border-radius: 10px;
+  }

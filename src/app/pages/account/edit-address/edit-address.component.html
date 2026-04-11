@@ -1,0 +1,162 @@
+<!-- <app-breadcrumb [title]="'Dashboard'" [breadcrumb]="'Dashboard'"></app-breadcrumb> -->
+
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="account-sidebar" (click)="ToggleDashboard()">
+                    <a href="javascript:void(0)" class="popup-btn">
+                        My Account
+                    </a>
+                </div>
+                <div class="dashboard-left" [class.open]="openDashboard">
+                    <div class="collection-mobile-back" (click)="ToggleDashboard()">
+                        <span class="filter-back">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i> back
+                        </span>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li><a [routerLink]="['/dashboard']">My Account</a></li>
+                            <li class="active"><a [routerLink]="['/address']">Address Book</a></li>
+                            <li><a [routerLink]="['/order-list']">Order List</a></li>
+                            <li><a [routerLink]="['/change-password']">Change Password</a></li>
+                            <li class="last"><a (click)="logout()">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- MANAGE ADDRESS -->
+            <div class="col-lg-9">
+                <div class="dashboard-right">
+                    <div class="dashboard">
+                        <div class="box-account box-info">
+                            <div>
+                                <div class="box mt-3">
+                                    <div class="box-title">
+                                        <h3>{{addressMassage}}</h3>
+                                    </div>
+                                    <div class="contact-page register-page">
+                                        <form class="theme-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                                            <input type="hidden" formControlName="defaultstatus"
+                                                [(ngModel)]="is_defaultval">
+                                            <div class="form-row">
+                                                <div class="col-md-12">
+                                                    <label for="addressline1">Name *</label>
+                                                    <input type="text" class="form-control" id="name"
+                                                        [(ngModel)]="fullname" placeholder="Name"
+                                                        formControlName="userfullname" (keydown)="handleEnter($event, 'addressline1')">
+                                                    <div *ngIf="userfullname.invalid && (userfullname.dirty || userfullname.touched) && userfullname.errors"
+                                                        class="text text-danger mt-1">
+                                                        <div *ngIf="userfullname.errors?.required">
+                                                            Name is Required
+                                                        </div>
+                                                        <div *ngIf="userfullname.errors?.pattern">
+                                                            Name Only Contain Letter with space
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="addressline1">Address Line 1 *</label>
+                                                    <input type="text" class="form-control" id="addressline1"
+                                                        [(ngModel)]="address1" placeholder="Address"
+                                                        formControlName="addressline1" (keydown)="handleEnter($event, 'addressline2')">
+                                                    <div *ngIf="addressline1.invalid && (addressline1.dirty || addressline1.touched) && addressline1.errors"
+                                                        class="text text-danger mt-1">
+                                                        <div *ngIf="addressline1.errors?.required">
+                                                            Address 1 is Required
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <label for="addressline2">Address Line 2</label>
+                                                    <input type="text" class="form-control" id="addressline2"
+                                                        [(ngModel)]="address2" placeholder="Address"
+                                                        formControlName="addressline2" (keydown)="handleEnter($event, 'city')">
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="city">City *</label>
+                                                    <input type="text" class="form-control" id="city" placeholder="City"
+                                                        [(ngModel)]="cityname" formControlName="city" (keydown)="handleEnter($event, 'state')">
+                                                    <div *ngIf="city.invalid && (city.dirty || city.touched) && city.errors"
+                                                        class="text text-danger mt-1">
+                                                        <div *ngIf="city.errors?.required">
+                                                            City is Required
+                                                        </div>
+                                                        <div *ngIf="city.errors?.pattern">
+                                                            City Only Contain Letter with space
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="state">State *</label>
+                                                    <input type="text" class="form-control" id="state"
+                                                        placeholder="State" [(ngModel)]="statename"
+                                                        formControlName="state" (keydown)="handleEnter($event, 'postal_code')">
+                                                    <div *ngIf="state.invalid && (state.dirty || state.touched) && state.errors"
+                                                        class="text text-danger mt-1">
+                                                        <div *ngIf="state.errors?.required">
+                                                            State is Required
+                                                        </div>
+                                                        <div *ngIf="state.errors?.pattern">
+                                                            State Only Contain Letter with space
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="postal_code">Postal Code *</label>
+                                                    <input type="text" class="form-control" id="postal_code"
+                                                        placeholder="Postal code" [(ngModel)]="postal_code"
+                                                        formControlName="postalCode" maxlength="10" (keydown)="handleEnter($event, 'telephone')">
+                                                    <div *ngIf="postalCode.invalid && (postalCode.dirty || postalCode.touched) && postalCode.errors"
+                                                        class="text text-danger mt-1">
+                                                        <div *ngIf="postalCode.errors?.required">
+                                                            Posta Code is Required
+                                                        </div>
+                                                        <div *ngIf="telephone.errors?.maxlength">
+                                                            Postal Code only allow 10 digits.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <label for="telephone">Telephone </label>
+                                                    <input type="text" class="form-control" id="telephone"
+                                                        placeholder="Telephone" [(ngModel)]="telephone_num"
+                                                        formControlName="telephone"  (keydown)="handleEnter($event)">
+                                                    <div *ngIf="telephone.invalid && (telephone.dirty || telephone.touched) && telephone.errors"
+                                                        class="text text-danger mt-1">
+                                                        <div *ngIf="telephone.errors?.required">
+                                                            Telephone number is Required
+                                                        </div>
+                                                        <div *ngIf="telephone.errors?.pattern">
+                                                            Only number is allowed.
+                                                        </div>
+                                                        <div *ngIf="telephone.errors?.maxlength">
+                                                            TelePhone number only allow 15 digits.
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12">
+                                                    <button class="btn btn-sm btn-solid rounded-lg" type="submit">Save
+                                                        Address</button>
+                                                </div>
+                                                <div [className]="isValid ? 'alert mt-3 alert-success' : 'alert mt-3 alert-danger'"
+                                                    role="alert" *ngIf="isValid">
+                                                    <div class="d-flex align-items-center"><span *ngIf="isValid"><i
+                                                                class="fa fa-spinner fa-spin"
+                                                                style="font-size:24px"></i>
+                                                            &nbsp;</span>{{submitMassage}}</div>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>

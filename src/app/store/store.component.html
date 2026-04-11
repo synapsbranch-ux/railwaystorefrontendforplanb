@@ -1,0 +1,26 @@
+<app-header-one [sticky]="true"></app-header-one>
+<div class="title1 section-t-space section-b-space-2">
+  <h2>stores</h2>
+  <h4 class="title-inner1">Lorem ipsum dolor sit amet</h4>
+</div>
+<section class="p-t-0 section-b-space">
+  <div class="container">
+    <div class="row">
+      <div class="col-sm-3 col-md-3 col-12" *ngFor="let store of stores; let i = index">
+        <a [routerLink]="['/stores/', store.store_slug]"
+        routerLinkActive="router-link-active" >
+          <div class="store_img collection-banner">
+            <img src="{{store.store_image}}" alt="Store" class="img-fluid">
+          </div>
+        </a>
+        <div class="store_name text-center">
+          {{store.store_name}}
+        </div>
+      </div>
+      <!-- <div class="col-12 text-center section-t-space section-b-space-2">
+        <button class="btn btn-outline rounded-lg" (click)="getMoreStores()">Load More</button>
+      </div> -->
+    </div>
+  </div>
+</section>
+<app-footer-one></app-footer-one>

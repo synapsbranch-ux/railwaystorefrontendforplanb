@@ -1,0 +1,95 @@
+<div class="vendor-selector">
+    <!-- Loading state -->
+    <div *ngIf="isLoading" class="text-center py-4">
+        <div class="spinner-border text-primary" role="status">
+            <span class="visually-hidden">Loading...</span>
+        </div>
+    </div>
+
+    <!-- Vendor list -->
+    <div *ngIf="!isLoading && !showReviews">
+        <h4 class="mb-3">Choose your vendor</h4>
+        <div *ngIf="fulfillers.length === 0" class="text-center py-3">
+            <p>No vendors available for this product.</p>
+        </div>
+        <div class="vendor-card" *ngFor="let f of fulfillers"
+             [class.selected]="selectedVendorId === f.vendor_id?._id">
+            <div class="row align-items-center">
+                <div class="col-3 col-md-2 text-center">
+                    <img [src]="f.store_logo || 'assets/images/placeholder-store.png'"
+                         [alt]="f.vendor_id?.name"
+                         class="vendor-logo">
+                </div>
+                <div class="col-5 col-md-6">
+                    <h5 class="vendor-name mb-1">{{ f.store_name || f.vendor_id?.name }}</h5>
+                    <p class="vendor-price mb-0">{{ f.vendor_sales_price | currency:'USD' }}</p>
+                </div>
+                <div class="col-4 col-md-4 text-end">
+                    <button class="btn btn-outline-secondary btn-sm mb-1 d-block w-100"
+                            (click)="openReviews(f.vendor_id?._id)">
+                        Reviews
+                    </button>
+                    <button class="btn btn-primary btn-sm d-block w-100"
+                            (click)="selectVendor(f)">
+                        Select
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Reviews panel -->
+    <div *ngIf="showReviews">
+        <div class="d-flex align-items-center mb-3">
+            <button class="btn btn-link p-0 me-2" (click)="closeReviews()">
+                &larr; Back
+            </button>
+            <h4 class="mb-0">Vendor Reviews</h4>
+        </div>
+
+        <div *ngIf="reviews.length === 0" class="text-center py-3">
+            <p>No reviews yet for this vendor.</p>
+        </div>
+
+        <div *ngFor="let r of reviews" class="review-item mb-3 p-3">
+            <p class="mb-1">{{ r.comment_text }}</p>
+            <div class="review-meta">
+                <small *ngIf="r.reviewer_email" class="text-muted me-2">{{ r.reviewer_email }}</small>
+                <small class="text-muted">{{ r.createdAt | date:'shortDate' }}</small>
+            </div>
+        </div>
+
+        <!-- Add review toggle -->
+        <button *ngIf="!showAddReview" class="btn btn-outline-primary btn-sm mt-2"
+                (click)="showAddReview = true">
+            Write a review
+        </button>
+
+        <!-- Add review form -->
+        <div *ngIf="showAddReview" class="add-review-form mt-3 p-3">
+            <h5>Write a Review</h5>
+            <div class="mb-2">
+                <input type="email" class="form-control form-control-sm"
+                       placeholder="Email (optional)"
+                       [(ngModel)]="reviewForm.reviewer_email">
+            </div>
+            <div class="mb-2">
+                <textarea class="form-control form-control-sm" rows="3"
+                          placeholder="Your review..."
+                          [(ngModel)]="reviewForm.comment_text"
+                          maxlength="2000"></textarea>
+            </div>
+            <div class="d-flex gap-2">
+                <button class="btn btn-primary btn-sm"
+                        [disabled]="isSubmittingReview || !reviewForm.comment_text.trim()"
+                        (click)="submitReview()">
+                    {{ isSubmittingReview ? 'Submitting...' : 'Submit' }}
+                </button>
+                <button class="btn btn-outline-secondary btn-sm"
+                        (click)="showAddReview = false">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

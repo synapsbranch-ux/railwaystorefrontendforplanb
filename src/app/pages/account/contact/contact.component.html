@@ -1,0 +1,123 @@
+<app-header-one [sticky]="true"></app-header-one>
+<!--section start-->
+<section class=" contact-page section-b-space">
+    <div class="container">
+        <div class="row section-b-space">
+            <!-- <div class="col-lg-7 map">
+                <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3033.168994161686!2d-74.83282108442636!3d40.51575565753459!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x89c3f3d58d72f98f%3A0x9f04d5725f44d333!2s17%20Bressler%20Rd%2C%20Flemington%2C%20NJ%2008822%2C%20USA!5e0!3m2!1sen!2sin!4v1656416592185!5m2!1sen!2sin"
+                    width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+            </div> -->
+            <div class="col-lg-5">
+                <div class="contact-right">
+                    <ul>
+                        <!-- <li>
+                            <div class="contact-icon">
+                                <img src="assets/images/icon/phone.png" alt="Generic placeholder image">
+                                <h6>Contact Us</h6>
+                            </div>
+                            <div class="media-body">
+                                <p>732-763-0773</p>
+                            </div>
+                        </li> -->
+                        <!-- <li>
+                            <div class="contact-icon">
+                                <i class="fa fa-map-marker" aria-hidden="true"></i>
+                                <h6>Address</h6>
+                            </div>
+                            <div class="media-body">
+                                <p>17 Bressler Rd, Flemington,</p>
+                                <p> NJ, 08822</p>
+                            </div>
+                        </li> -->
+                        <li>
+                            <div class="contact-icon">
+                                <img src="assets/images/icon/email.png" alt="Generic placeholder image">
+                                <h6>Email</h6>
+                            </div>
+                            <div class="media-body">
+                                <p>support&#64;ralbatech.com</p>
+                                <p>info&#64;ralbatech.com</p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-12">
+                <form class="theme-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-row">
+                        <div class="col-md-6">
+                            <label for="name">First Name</label>
+                            <input type="text" class="form-control" formControlName="firstName" placeholder="First name" required="" (keydown)="handleEnter($event, 'lastName')">
+                            <div *ngIf="firstName.invalid && (firstName.dirty || firstName.touched)" class="text text-danger">
+                                <div *ngIf="firstName.errors?.required">
+                                    First Name is required.
+                                </div>
+                                <div *ngIf="firstName.errors?.pattern">
+                                    First Name Only Contain Letter with space
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" class="form-control" id="lastName" formControlName="lastName" placeholder="Last name" required="" (keydown)="handleEnter($event, 'phone')">
+                            <div *ngIf="lastName.invalid && (lastName.dirty || lastName.touched)" class="text text-danger">
+                                <div *ngIf="lastName.errors?.required">
+                                    Last Name is required.
+                                </div>
+                                <div *ngIf="lastName.errors?.pattern">
+                                    Last Name Only Contain Letter with space
+                                </div>
+                            </div>
+                         </div>
+                        <div class="col-md-6">
+                            <label for="phone">Phone number</label>
+                            <input type="text" class="form-control" id="phone" formControlName="phone" placeholder="Enter your number" required=""  (keydown)="handleEnter($event, 'email')">
+                      
+                            <div *ngIf="phone.invalid && (phone.dirty || phone.touched)" class="text text-danger mt-1">
+                                <div *ngIf="phone.errors?.pattern">
+                                    Only number is allowed.
+                                </div>
+                                <div *ngIf="phone.errors?.maxlength">
+                                    Phone number only allow 15 digits.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="email">Email</label>
+                            <input type="text" class="form-control" id="email" formControlName="email" placeholder="Email" required="" (keydown)="handleEnter($event, 'massage')">
+                            <div *ngIf="email.invalid && (email.dirty || email.touched)" class="text text-danger mt-1">
+                                <div *ngIf="email.errors?.required">
+                                    Email is required.
+                                </div>
+                                <div *ngIf="email.errors?.email || email.errors?.pattern">
+                                    Please enter a valid email.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="review">Write Your Message</label>
+                            <textarea class="form-control" placeholder="Write Your Message" id="massage" formControlName="massage" rows="6" (keydown)="handleEnter($event)"></textarea>
+                            <div *ngIf="massage.invalid && (massage.dirty || massage.touched)" class="text text-danger">
+                                <div *ngIf="massage.errors?.required">
+                                    Message is required.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-12">
+                            <button class="btn btn-solid mr-15p" type="submit" >Send Your Message</button>
+                            <button class="btn btn-solid" type="reset">Reset</button>
+                        </div>
+                        <div [className]="isValid ? 'alert mt-3 alert-success' : 'alert mt-3 alert-danger'" role="alert" *ngIf="isValid">
+                            <div class="d-flex align-items-center"><span *ngIf="isValid"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i> &nbsp;</span>{{submitMassage}}</div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+<!--Section ends-->
+
+<app-footer-one></app-footer-one>

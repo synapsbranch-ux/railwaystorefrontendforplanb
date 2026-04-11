@@ -1,0 +1,74 @@
+<app-header-one [sticky]="true"></app-header-one>
+
+<!-- Home slider start-->
+<section class="p-0">
+    <app-slider [sliders]="sliders" [textClass]="'text-center'" [category]="'fashion'" [buttonText]="'shop now'">
+    </app-slider>
+    <!-- NEW DESIGN HTML -->
+    <section class="py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-12">
+                    <h2 class="main-title">Popular Brand</h2>
+                </div>
+                <div class="col-10">
+                    <app-logo [brands]="home_brands"></app-logo>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="categorySection">
+        <div class="container pb-4">
+            <div class="row">
+                <div class="col-12 mb-4">
+                    <h2 class="main-title mb-3">Endless Styles, Effortless Shopping</h2>
+                    <p class="main-sub-title">Find Your Perfect Pair!</p>
+                </div>
+                <div class="col-12 col-sm-3 position-relative mb-3" *ngFor="let tag of tagListData">
+                    <img src="{{tag.tag_image}}" class="w-100" alt="{{tag.tag_name}}">
+                    <div class="categoryBtn">
+                        <!-- <a (click)="getTagsProducts(tag)">{{tag.tag_name}}</a> -->
+                        <button (click)="getTagsProducts(tag)">{{tag.tag_name}}</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section *ngFor="let section of mediaTextData; let i = index" [ngClass]="{'blueBanner': i % 2 !== 0, 'py-3 py-lg-5': i % 2 === 0}">
+        <div class="container">
+            <div class="row align-items-center" [ngClass]="{'text-lg-end': i % 2 !== 0}">
+                <div class="col-12 col-md-6 col-lg-5 text-center text-lg-start" *ngIf="i % 2 === 0">
+                    <h2 class="bigTitle">{{ section.heading_text }}</h2>
+                    <p class="bigTitleSubText">{{ section.description_text }}</p>
+                    <div class="w-100 d-block d-sm-none" *ngIf="i % 2 === 0">
+                        <img [src]="section.section_image" class="w-100 brandImg" [alt]="section.section_image_name">
+                    </div>
+                    <button style="border: 0;" class="blueBtn" (click)="getMediaSectionTagsProducts(section)">Shop Now</button>
+                </div>
+                <div class="col-12 col-md-6 col-lg-7 d-none d-sm-block" *ngIf="i % 2 === 0">
+                    <img [src]="section.section_image" class="w-100 brandImg" [alt]="section.section_image_name">
+                </div>
+                
+                <!-- Reversed for odd sections -->
+                <div class="col-12 col-md-6 col-lg-7" *ngIf="i % 2 !== 0">
+                    <img [src]="section.section_image" class="w-100" [alt]="section.section_image_name">
+                </div>
+                <div class="col-12 col-md-6 col-lg-5 text-center text-lg-end" *ngIf="i % 2 !== 0">
+                    <h2 class="bigTitle">{{ section.heading_text }}</h2>
+                    <p class="bigTitleSubText">{{ section.description_text }}</p>
+                    <!-- <a class="blueBtn" (click)="showAllProducts()">Shop Now</a> -->
+                    <button style="border: 0;" class="blueBtn" (click)="getMediaSectionTagsProducts(section)">Shop Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+
+    <!-- NEW DESIGN HTML -->
+
+    
+
+</section>
+<!-- Home slider End -->
+<app-footer-one></app-footer-one>

@@ -1,0 +1,55 @@
+.card {
+    input {
+        position: absolute;
+        top: 25px;
+        right: 15px;
+    }
+}
+
+a {
+    cursor: pointer;
+}
+
+.dashboard-left {
+    .block-content {
+        padding: 0;
+
+        ul li {
+            border-bottom: 1px solid #e5e5e5;
+            align-items: center;
+
+            &:hover {
+                background-color: #003e94;
+                color: #fff;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+            &:last-child {
+                border: none;
+            }
+
+            &:before {
+                margin-top: 14px;
+            }
+        }
+
+        ul li.active {
+            padding-left: 15px;
+            background-color: #003e94;
+            color: #fff;
+
+            a {
+                color: #fff;
+            }
+        }
+    }
+}
+
+.account-sidebar {
+    a {
+        color: #fff;
+    }
+}

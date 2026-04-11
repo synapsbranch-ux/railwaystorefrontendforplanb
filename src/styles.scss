@@ -1,0 +1,99 @@
+/* You can add global styles to this file, and also import other style files */
+@import "~@ng-select/ng-select/themes/default.theme.css";
+
+/* You can add global styles to this file, and also import other style files */
+
+// .cart_product_info {
+//     width: 55%;
+// }
+
+.password_sec {
+    position: relative;
+}
+
+.field-icon {
+    position: absolute;
+    right: 15px;
+    bottom: 13px;
+    cursor: pointer;
+}
+
+.ngxImageZoomFullContainer.ngxImageZoomLensEnabled {
+    background-color: #fff;
+}
+.mr-3 {
+    margin-right: 1em;
+}
+
+video {
+    z-index: 1 !important;
+    // height: 500px !important;
+}
+
+a-scene {
+    z-index: 2 !important;
+    // height: 500px !important;
+}
+
+.w-90 {
+    width: 90% !important;
+}
+
+.w-95 {
+    width: 95% !important;
+}
+
+.pe-auto {
+    cursor: pointer !important;
+}
+
+.footer-logo img {
+    max-width: 200px;
+}
+
+.order-list img {
+    height: auto !important;
+}
+
+.icon.icon.mr-3 {
+    margin-right: .6rem;
+}
+
+.warning_msg {
+    padding: 1em;
+    border: double 3px;
+    margin: 5px;
+}
+
+.media.media.flex {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+}
+
+@media only screen and (max-width: 600px) {
+    .field-icon {
+        bottom: 18px;
+    }
+
+    a-scene {
+        height: 480px !important;
+    }
+
+    video {
+        height: 480px !important;
+    }
+}
+
+@media only screen and (max-width: 577px) {
+    .onhover-dropdown.mobile-account {
+        .onhover-show-div {
+            bottom: 19px;
+            top: unset;
+
+            li a {
+                font-size: 14px !important;
+            }
+        }
+    }
+}

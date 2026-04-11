@@ -1,0 +1,158 @@
+.card {
+    input {
+        position: absolute;
+        top: 25px;
+        right: 15px;
+    }
+}
+
+a {
+    cursor: pointer;
+}
+
+.card-body {
+    p {
+        margin-bottom: .3rem;
+    }
+}
+
+.bg-success.devivery {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 3px !important;
+    background-color: #1d7c00 !important;
+}
+
+.bg-warning.pending {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 3px !important;
+}
+
+.bg-primary.ongoing {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 3px !important;
+}
+
+.card {
+    margin-bottom: 1rem;
+}
+
+address {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    div {
+        // flex-basis: 48%;
+    }
+
+    img {
+        width: 200px;
+        height: 200px;
+    }
+}
+
+.order-btn {
+    border: 1px solid #003e94;
+    padding: 7px;
+    border-radius: 8px;
+    color: #fff;
+    background-color: #003e94;
+
+    &:hover {
+        color: #003e94;
+        background-color: #fff;
+    }
+}
+
+.weight-600 {
+    font-weight: 600;
+}
+
+.product-order {
+    .product-order-detail {
+        .order_detail h4 {
+            font-size: 16px;
+        }
+    }
+}
+
+.dashboard-left {
+    .block-content {
+        padding: 0;
+
+        ul li {
+            border-bottom: 1px solid #e5e5e5;
+            align-items: center;
+
+            &:hover {
+                background-color: #003e94;
+                color: #fff;
+
+                a {
+                    color: #fff;
+                }
+            }
+
+            &:last-child {
+                border: none;
+            }
+
+            &:before {
+                margin-top: 14px;
+            }
+        }
+
+        ul li.active {
+            padding-left: 15px;
+            background-color: #003e94;
+            color: #fff;
+
+            a {
+                color: #fff;
+            }
+        }
+    }
+}
+
+.account-sidebar {
+    a {
+        color: #fff;
+    }
+}
+
+.delivery-card {
+    background-color: #f2f2f2;
+}
+.loginBtn {
+    background-color: #1E3799;
+    border-radius: 50px;
+    color: #fff !important;
+    padding: 12px 15px;
+    border: 1px solid transparent;
+    min-width: 120px;
+    &:hover{
+        background-color: #182c79;
+    }
+}
+.createBtn {
+    border: 1px solid #1E3799;
+    border-radius: 50px;
+    color: #1E3799 !important;
+    padding: 12px 15px;
+    min-width: 120px;
+    &:hover{
+        background-color: #182c79;
+        color: #fff !important;
+    }
+}
+.pending,
+.ongoing{
+    border-radius: 4px 0 4px 0px;
+    font-size:12px;
+}

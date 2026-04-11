@@ -1,0 +1,86 @@
+address {
+    padding-left: 10px;
+}
+
+.desabledform {
+    opacity: .4;
+}
+.opercity-5
+{
+    opacity: .5;
+}
+
+.add_address {
+    text-decoration: underline;
+    color: #007bff;
+    cursor: pointer;
+}
+.upper-box .loading{
+    position: absolute;
+    top: 0;
+    left: 25%;
+    z-index: 99;
+    width: 40%;
+}
+.mat-accordion .mat-expansion-panel 
+{
+    box-shadow: none !important;
+    margin-bottom: 2rem;
+}
+.payment-options label
+{
+    padding-left: 6px;
+}
+
+.loginBtn {
+    background-color: #1E3799;
+    border-radius: 50px;
+    color: #fff !important;
+    padding: 12px 15px;
+    border: 1px solid transparent;
+    min-width: 120px;
+    text-decoration: none;
+    display: inline-block;
+    text-transform: capitalize;
+    &:hover{
+        background-color: #182c79;
+    }
+}
+
+
+.card-coupon {
+    border: 1px solid gray;
+    border-radius: 15px;
+}
+
+.search-coupon {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.card-coupon-applied{
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 12px;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+
+.apply-text {
+  position: absolute;
+  right: 15px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #0d6efd;   /* Bootstrap primary blue */
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+
+
+

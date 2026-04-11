@@ -1,0 +1,575 @@
+.small-slider-product img {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+a{
+    cursor: pointer !important;
+}
+
+.product-slick1 {
+    height: 365px;
+    display: block;
+}
+.blueBtn.disabled{
+    background-color: #808080;
+}
+
+.product-right .color-variant li.active {
+    border: 2px solid #9d9999 !important;
+}
+
+.zoom-image {
+    max-height: 370px !important;
+    object-fit: contain !important;
+}
+.product-right h3 del, .product-right .h3 del {
+    padding-right: 5px;
+}
+
+.addons-price select,
+.addons-price textarea,
+.addons-price input,
+.addons-price div:first-child {
+    margin-right: 15px;
+    flex-basis: 55%;
+}
+
+.addons-price div {
+    flex-basis: 40%;
+}
+
+.price-section {
+    display: flex;
+}
+
+.price-section input {
+    border: none;
+    box-shadow: none;
+}
+
+iframe {
+    width: 100%;
+    height: 400px;
+}
+
+.form-control {
+    height: 40px;
+    border-radius: 8px;
+    border-width: 2px;
+}
+
+.price-section input {
+    pointer-events: none;
+    min-width: 40px;
+    margin-right: 0 !important;
+    background: transparent;
+}
+
+.view_3d {
+    width: 100px !important;
+    margin: 0 auto;
+    height: 130px;
+}
+
+.add_ons_level {
+    width: 100%;
+
+    h4 {
+        border-bottom: 1px solid #9d9999;
+    }
+}
+
+.border-product {
+    .col-sm-6:nth-child(7) {
+        max-width: 100% !important;
+        flex: 100%;
+    }
+}
+
+.try_on_btn {
+    border: 1px solid #007bff;
+    padding: 5px 15px;
+    font-size: 16px;
+    border-radius: 3px;
+
+    i {
+        margin-right: 5px;
+    }
+
+}
+
+.try_on_btn:hover {
+    background-color: #007bff;
+    color: #fff;
+}
+
+.modal-body {
+    padding-left: 1rem !important;
+    padding-bottom: 1rem !important;
+}
+
+.color-range {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 100%;
+    height: 8px;
+    border-radius: 5px;
+    outline: none;
+    background: #d3d3d3;
+}
+
+.color-range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.color-range::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+.color-range::-ms-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
+
+
+
+
+.zoom-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    /* Adjust as needed */
+    height: 100%;
+    /* Adjust as needed */
+    cursor: crosshair;
+}
+
+.zoom-image {
+    transition: transform 0.2s ease;
+    width: 100%;
+    height: auto;
+    /* Maintain aspect ratio */
+    display: block;
+}
+
+.zoom-container.zoomed .zoom-image {
+    transform: scale(2);
+    /* Adjust scale as needed */
+}
+
+
+
+
+@media only screen and (max-width: 600px) {
+    .product-slick1 {
+        height: 200px;
+    }
+
+    .small-slider-product img {
+        height: 65px;
+        width: 65px;
+        object-fit: contain;
+    }
+
+    iframe {
+        width: 100%;
+        height: 200px;
+    }
+
+    .try_on_btn {
+        margin-top: 25px;
+    }
+}
+
+
+
+//Johnley
+
+/* Icône d'aide moderne avec gradient (inchangée, légèrement améliorée) */
+
+    
+/* Icône d'aide moderne avec gradient */
+.help-icon {
+    display: inline-block;
+   background-color: #007bff;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+   // height: 20px;
+    text-align: center;
+    line-height: 20px;
+    //font-size: 12px;
+    //font-weight: bold;
+    position: relative;
+    border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+
+/* Tooltip principal avec design glassmorphism */
+.help-tooltip {
+    text-align: left !important;
+    padding-left: 1.5em;
+    text-align: justify !important;
+    position: absolute;
+    margin-bottom: 5em;
+    top: -8px;
+    left: 28px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    color: #2d3748;
+    padding: 16px 20px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 
+        0 20px 25px -5px rgba(0, 0, 0, 0.1),
+        0 10px 10px -5px rgba(0, 0, 0, 0.04),
+        0 0 0 1px rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    min-width: 500px;
+    max-width: 800px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 2;
+    word-wrap: break-word;
+    animation: slideInTooltip 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+/* Flèche avec effect glassmorphism */
+.help-tooltip::before {
+    content: '';
+    position: absolute;
+    top: 12px;
+    left: -8px;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+    border-right: 8px solid rgba(255, 255, 255, 0.95);
+    filter: drop-shadow(-1px 0 1px rgba(0, 0, 0, 0.1));
+}
+
+/* Tooltip avec style carte moderne */
+.help-tooltip-card {
+    position: absolute;
+    top: -8px;
+    left: 28px;
+    background: linear-gradient(145deg, #f8fafc 0%, #e2e8f0 100%);
+    color: #1a202c;
+    padding: 18px 22px;
+    border-radius: 16px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.25),
+        0 0 0 1px rgba(255, 255, 255, 0.8);
+    min-width: 520px;
+    max-width: 820px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.7;
+    word-wrap: break-word;
+    animation: popInTooltip 0.4s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.help-tooltip-card::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: -10px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #f8fafc;
+    filter: drop-shadow(-2px 0 3px rgba(0, 0, 0, 0.15));
+}
+
+/* Tooltip avec thème sombre élégant */
+.help-tooltip-dark {
+    position: absolute;
+    top: -8px;
+    left: 28px;
+    background: linear-gradient(145deg, #2d3748 0%, #1a202c 100%);
+    color: #e2e8f0;
+    padding: 18px 22px;
+    border-radius: 14px;
+    font-size: 14px;
+    font-weight: 500;
+    z-index: 1000;
+    box-shadow: 
+        0 25px 50px -12px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(255, 255, 255, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    min-width: 520px;
+    max-width: 820px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.7;
+    word-wrap: break-word;
+    animation: slideInTooltip 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+}
+
+.help-tooltip-dark::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: -9px;
+    border-top: 9px solid transparent;
+    border-bottom: 9px solid transparent;
+    border-right: 9px solid #2d3748;
+    filter: drop-shadow(-2px 0 3px rgba(0, 0, 0, 0.3));
+}
+
+/* Tooltip avec effet néon/cyber */
+.help-tooltip-neon {
+    position: absolute;
+    top: -8px;
+    left: 28px;
+    background: rgba(13, 13, 13, 0.95);
+    color: #00ff88;
+    padding: 18px 22px;
+    border-radius: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    font-family: 'Courier New', monospace;
+    z-index: 1000;
+    border: 2px solid #00ff88;
+    box-shadow: 
+        0 0 20px rgba(0, 255, 136, 0.3),
+        inset 0 0 20px rgba(0, 255, 136, 0.1),
+        0 20px 40px rgba(0, 0, 0, 0.3);
+    min-width: 520px;
+    max-width: 820px;
+    max-height: 500px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    line-height: 1.6;
+    word-wrap: break-word;
+    animation: glowInTooltip 0.4s ease-out;
+    text-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}
+
+.help-tooltip-neon::before {
+    content: '';
+    position: absolute;
+    top: 14px;
+    left: -12px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-right: 10px solid #00ff88;
+    filter: drop-shadow(0 0 5px rgba(0, 255, 136, 0.5));
+}
+
+/* Barres de défilement personnalisées */
+.help-tooltip::-webkit-scrollbar,
+.help-tooltip-card::-webkit-scrollbar,
+.help-tooltip-dark::-webkit-scrollbar,
+.help-tooltip-neon::-webkit-scrollbar {
+    width: 6px;
+}
+
+.help-tooltip::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+
+.help-tooltip::-webkit-scrollbar-thumb {
+     background-color: #007bff;
+    border-radius: 3px;
+}
+
+.help-tooltip-card::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #cbd5e0, #a0aec0);
+    border-radius: 3px;
+}
+
+.help-tooltip-dark::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #4a5568, #2d3748);
+    border-radius: 3px;
+}
+
+.help-tooltip-neon::-webkit-scrollbar-thumb {
+    background: #00ff88;
+    border-radius: 3px;
+    box-shadow: 0 0 5px rgba(0, 255, 136, 0.5);
+}
+
+/* Positioning alternatif pour tooltip à gauche */
+.help-tooltip-right,
+.help-tooltip-card.help-tooltip-right,
+.help-tooltip-dark.help-tooltip-right,
+.help-tooltip-neon.help-tooltip-right {
+    left: -260px !important;
+    right: auto;
+}
+
+.help-tooltip-left::before,
+.help-tooltip-card.help-tooltip-left::before,
+.help-tooltip-dark.help-tooltip-left::before,
+.help-tooltip-neon.help-tooltip-left::before {
+    left: auto !important;
+    right: -8px;
+    border-left: 8px solid rgba(255, 255, 255, 0.95);
+    border-right: none !important;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+
+.help-tooltip-card.help-tooltip-left::before {
+    border-left-color: #f8fafc;
+}
+
+.help-tooltip-dark.help-tooltip-left::before {
+    border-left-color: #2d3748;
+}
+
+.help-tooltip-neon.help-tooltip-left::before {
+    border-left-color: #00ff88;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .help-tooltip,
+    .help-tooltip-card,
+    .help-tooltip-dark,
+    .help-tooltip-neon {
+        min-width: 200px;
+        max-width: 300px;
+        font-size: 13px;
+        padding: 14px 18px;
+    }
+}
+
+/* 3D Image Animation */
+.small-slider-product {
+    a {
+        img[src*="3D_Rotate.png"] {
+            transition: transform 0.3s ease, filter 0.3s ease;
+            cursor: pointer;
+            
+            &:hover {
+                transform: rotateY(25deg) scale(1.1);
+                filter: brightness(1.2) drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+            }
+            
+            /* Left-right rotation animation to draw attention */
+            animation: rotate3DLeftRight 2s ease-in-out infinite;
+        }
+    }
+}
+
+@keyframes rotate3DLeftRight {
+    0%, 100% {
+        transform: rotateY(-15deg) scale(1);
+        filter: brightness(1);
+    }
+    50% {
+        transform: rotateY(15deg) scale(1.05);
+        filter: brightness(1.1);
+    }
+}
+
+/* Animations */
+@keyframes slideInTooltip {
+    from {
+        opacity: 0;
+        transform: translateX(-15px) translateY(-5px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) translateY(0);
+    }
+}
+
+@keyframes popInTooltip {
+    0% {
+        opacity: 0;
+        transform: scale(0.8) translateX(-10px);
+    }
+    50% {
+        transform: scale(1.05) translateX(-2px);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1) translateX(0);
+    }
+}
+
+@keyframes glowInTooltip {
+    from {
+        opacity: 0;
+        transform: translateX(-10px);
+        box-shadow: 
+            0 0 5px rgba(0, 255, 136, 0.1),
+            0 10px 20px rgba(0, 0, 0, 0.1);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+        box-shadow: 
+            0 0 20px rgba(0, 255, 136, 0.3),
+            inset 0 0 20px rgba(0, 255, 136, 0.1),
+            0 20px 40px rgba(0, 0, 0, 0.3);
+    }
+}
+
+/* Classes utilitaires pour changement de thème */
+.tooltip-theme-glass { /* classe par défaut */ }
+.tooltip-theme-card .help-tooltip { @extend .help-tooltip-card; }
+.tooltip-theme-dark .help-tooltip { @extend .help-tooltip-dark; }
+.tooltip-theme-neon .help-tooltip { @extend .help-tooltip-neon; }
+
+/* Multi-Store Portal: Vendor selector modal */
+.vendor-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.vendor-modal-content {
+    background: #fff;
+    border-radius: 12px;
+    max-width: 550px;
+    width: 90%;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
+}
+
+.vendor-modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    background: none;
+    border: none;
+    font-size: 1.8rem;
+    cursor: pointer;
+    color: #666;
+    z-index: 1;
+
+    &:hover {
+        color: #333;
+    }
+}

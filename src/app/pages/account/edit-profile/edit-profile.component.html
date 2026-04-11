@@ -1,0 +1,90 @@
+<!-- <app-breadcrumb [title]="'Dashboard'" [breadcrumb]="'Dashboard'"></app-breadcrumb> -->
+
+<section class="section-b-space">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="account-sidebar" (click)="ToggleDashboard()">
+                    <a href="javascript:void(0)" class="popup-btn">
+                        My Account
+                    </a>
+                </div>
+                <div class="dashboard-left" [class.open]="openDashboard">
+                    <div class="collection-mobile-back" (click)="ToggleDashboard()">
+                        <span class="filter-back">
+                            <i class="fa fa-angle-left" aria-hidden="true"></i> back
+                        </span>
+                    </div>
+                    <div class="block-content">
+                        <ul>
+                            <li class="active"><a [routerLink]="['/dashboard']">My Account</a></li>
+                            <li><a [routerLink]="['/address']">Address Book</a></li>
+                            <li><a [routerLink]="['/order-list']">Order List</a></li>
+                            <li><a [routerLink]="['/change-password']">Change Password</a></li>
+                            <li class="last"><a (click)="logout()">Log Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="dashboard-right">
+                    <div class="dashboard">
+                        <form class="theme-form" [formGroup]="form" (ngSubmit)="onSubmit()">
+                            <div class="form-row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="fname">Name</label>
+                                    <input type="text" class="form-control m-0" id="fname" placeholder="Name" [(ngModel)]="userName" required="" formControlName="fname" (keydown)="handleEnter($event, 'email')">
+                                    <div *ngIf="fname.invalid && (fname.dirty || fname.touched)" class="text text-danger mt-1">
+                                        <div *ngIf="fname.errors?.required">
+                                            First Name is required.
+                                        </div>
+                                        <div *ngIf="fname.errors?.pattern">
+                                            First Name Only Contain Letter with space
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-4">
+                                    <label for="email">Email</label>
+                                    <input type="text" class="form-control m-0" id="email" placeholder="Email" [(ngModel)]="userEmail"  required="" formControlName="emailid" readonly (keydown)="handleEnter($event, 'phone')">
+                                    <div *ngIf="emailid.invalid && (emailid.dirty || emailid.touched)" class="text text-danger mt-1">
+                                        <div *ngIf="emailid.errors?.required">
+                                            Email is required.
+                                        </div>
+                                        <div *ngIf="emailid.errors?.email || emailid.errors?.pattern">
+                                            Please enter a valid email.
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="col-md-6 mb-4">
+                                    <label for="phone">Phone</label>
+                                    <input type="text" class="form-control m-0" id="phone" placeholder="Phone" [(ngModel)]="userPhone" required="" formControlName="phonenum"   (keydown)="handleEnter($event)">
+                                    <div *ngIf="phonenum.invalid && (phonenum.dirty || phonenum.touched)" class="text text-danger mt-1">
+                                        <div *ngIf="phonenum.errors?.required">
+                                            Phone number is required.
+                                        </div>
+                                        <div *ngIf="phonenum.errors?.pattern">
+                                            Only number is allowed.
+                                        </div>
+                                        <div *ngIf="phonenum.errors?.maxlength">
+                                            Phone number only allow 15 digits.
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                                <div class="form-group">
+                                    <button type="submit" class="btn btn-solid rounded-lg">Update</button>
+                                </div>
+    
+                                <div [className]="isValid ? 'alert mt-3 alert-success' : 'alert mt-3 alert-danger'" role="alert" *ngIf="isValid">
+                                    <div class="d-flex align-items-center"><span *ngIf="isValid"><i class="fa fa-spinner fa-spin" style="font-size:24px"></i> &nbsp;</span>{{signupMassage}}</div>
+                                </div>
+                                
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
