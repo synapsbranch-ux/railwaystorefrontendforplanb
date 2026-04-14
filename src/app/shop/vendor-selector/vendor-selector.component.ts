@@ -22,11 +22,6 @@ export class VendorSelectorComponent implements OnInit {
     reviewsVendorId: string | null = null;
     reviews: any[] = [];
 
-    // Add review form
-    showAddReview = false;
-    reviewForm = { reviewer_email: '', comment_text: '' };
-    isSubmittingReview = false;
-
     constructor(
         private productService: ProductService,
         private reviewsService: ReviewsService
@@ -50,7 +45,6 @@ export class VendorSelectorComponent implements OnInit {
     openReviews(vendorId: string) {
         this.reviewsVendorId = vendorId;
         this.showReviews = true;
-        this.showAddReview = false;
         this.reviewsService.getVendorReviews(vendorId, this.productId).subscribe(
             res => { this.reviews = res.data?.reviews || []; }
         );
@@ -71,22 +65,10 @@ export class VendorSelectorComponent implements OnInit {
         });
     }
 
-    submitReview() {
-        if (!this.reviewForm.comment_text.trim()) return;
-        this.isSubmittingReview = true;
-        this.reviewsService.createReview({
-            vendor_id: this.reviewsVendorId,
-            product_id: this.productId,
-            reviewer_email: this.reviewForm.reviewer_email,
-            comment_text: this.reviewForm.comment_text
-        }).subscribe(
-            res => {
-                this.reviews.unshift(res.data);
-                this.reviewForm = { reviewer_email: '', comment_text: '' };
-                this.isSubmittingReview = false;
-                this.showAddReview = false;
-            },
-            err => { this.isSubmittingReview = false; }
-        );
+    onReviewAdded(review: any) {
+        if (!review) {
+            return;
+        }
+        this.reviews.unshift(review);
     }
 }

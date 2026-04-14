@@ -314,34 +314,79 @@ export class ProductService {
     return <Observable<ProductNew[]>>itemsStream;
   }
 
-  // Add to Cart
-  public addToCart(product, prod_qty, isupdate): any {
-    let SinglevendorStatus = true;
-    const cartItems = localStorage.getItem('cartItems');
-    if (localStorage.getItem('vendor_id') && cartItems && JSON.parse(cartItems).length > 0) {
-      if (product?.product_owner) {
-        if (localStorage.getItem('vendor_id') != product?.product_owner?._id) {
-          SinglevendorStatus = false
-          return false;
-        }
-        else {
-          this.addToCartforSingleVendor(product, prod_qty, isupdate);
-          return true;
-        }
-      }
-      else {
-        this.addToCartforSingleVendor(product, prod_qty, isupdate);
-        return true;
-      }
-
+  private resolveOwnerVendorId(product: any): string | null {
+    if (!product) {
+      return null;
     }
-    else {
-      localStorage.setItem('vendor_id', product.product_owner._id);
-      this.addToCartforSingleVendor(product, prod_qty, isupdate);
+    if (typeof product.product_owner === 'string') {
+      return product.product_owner;
     }
+    if (product.product_owner?._id) {
+      return product.product_owner._id;
+    }
+    if (product.product_owner_id) {
+      return product.product_owner_id;
+    }
+    return null;
   }
 
-  public addToCartforSingleVendor(product, prod_qty, isupdate) {
+  private resolveVendorSelection(product: any): { ownerVendorId: string | null; effectiveVendorId: string | null; fulfillerVendorId: string | null } {
+    const ownerVendorId = this.resolveOwnerVendorId(product);
+    const selectedFulfillerId = product?.selected_fulfiller_vendor_id || product?.fulfiller_vendor_id || product?.effective_vendor_id || ownerVendorId;
+    const effectiveVendorId = selectedFulfillerId ? String(selectedFulfillerId) : null;
+    const fulfillerVendorId = effectiveVendorId && ownerVendorId && effectiveVendorId !== String(ownerVendorId)
+      ? effectiveVendorId
+      : null;
+    return { ownerVendorId, effectiveVendorId, fulfillerVendorId };
+  }
+
+  private resolveEffectivePrice(product: any): number {
+    const selectedPrice = Number(product?.selected_fulfiller_price);
+    if (Number.isFinite(selectedPrice) && selectedPrice > 0) {
+      return selectedPrice;
+    }
+    const sale = Number(product?.product_sale_price);
+    if (Number.isFinite(sale) && sale > 0) {
+      return sale;
+    }
+    const retail = Number(product?.product_retail_price);
+    if (Number.isFinite(retail) && retail > 0) {
+      return retail;
+    }
+    return 0;
+  }
+
+  // Add to Cart
+  public addToCart(product, prod_qty, isupdate): any {
+    const vendorSelection = this.resolveVendorSelection(product);
+    if (!vendorSelection.effectiveVendorId) {
+      return false;
+    }
+
+    const cartItems = localStorage.getItem('cartItems');
+    const existingVendorId = localStorage.getItem('vendor_id');
+    if (existingVendorId && cartItems && JSON.parse(cartItems).length > 0) {
+      if (existingVendorId !== vendorSelection.effectiveVendorId) {
+        return false;
+      }
+      this.addToCartforSingleVendor(product, prod_qty, isupdate, vendorSelection.effectiveVendorId);
+      return true;
+    }
+
+    localStorage.setItem('vendor_id', vendorSelection.effectiveVendorId);
+    this.addToCartforSingleVendor(product, prod_qty, isupdate, vendorSelection.effectiveVendorId);
+    return true;
+  }
+
+  public addToCartforSingleVendor(product, prod_qty, isupdate, effectiveVendorId?: string) {
+    const vendorSelection = this.resolveVendorSelection(product);
+    if (effectiveVendorId) {
+      vendorSelection.effectiveVendorId = effectiveVendorId;
+      vendorSelection.fulfillerVendorId = vendorSelection.ownerVendorId && effectiveVendorId !== vendorSelection.ownerVendorId
+        ? effectiveVendorId
+        : null;
+    }
+
     const cartItem = state.cart.find(item => item._id === product._id);
     const qty = prod_qty
     const items = cartItem ? cartItem : product;
@@ -372,18 +417,15 @@ export class ProductService {
           state.cart.push({
             ...product,
             quantity: qty,
-            product_owner: product.product_owner._id,
+            product_owner: vendorSelection.ownerVendorId,
+            product_owner_id: vendorSelection.ownerVendorId,
+            fulfiller_vendor_id: vendorSelection.fulfillerVendorId,
+            effective_vendor_id: vendorSelection.effectiveVendorId
           })
         }
       }
       else {
-        let product_price = 0;
-        if (product.product_sale_price == null) {
-          product_price = product.product_retail_price
-        }
-        else {
-          product_price = product.product_sale_price
-        }
+        let product_price = this.resolveEffectivePrice(product);
         let cdata
         if (product.hasOwnProperty('left_eye_qty') && product.hasOwnProperty('right_eye_qty')) {
           cdata =
@@ -398,7 +440,9 @@ export class ProductService {
               "right_eye_qty": product.right_eye_qty ? product.right_eye_qty : 0,
               "price": product_price,
               "addons": product.addons,
-              "addonsprice": product.addonsprice
+              "addonsprice": product.addonsprice,
+              "product_owner_id": vendorSelection.ownerVendorId,
+              "fulfiller_vendor_id": vendorSelection.fulfillerVendorId
             }]
           }
         }
@@ -415,7 +459,9 @@ export class ProductService {
               "right_eye_qty": 0,
               "price": product_price,
               "addons": product.addons,
-              "addonsprice": product.addonsprice
+              "addonsprice": product.addonsprice,
+              "product_owner_id": vendorSelection.ownerVendorId,
+              "fulfiller_vendor_id": vendorSelection.fulfillerVendorId
             }]
           }
         }
@@ -432,6 +478,10 @@ export class ProductService {
               for (const element of res['data'].products) {
                 this.getproductsBySlugs(element.pro_slug).subscribe(product => {
                   product_img = product['data'].product_image != undefined ? product['data'].product_image[0].pro_image : 'assets/images/product/placeholder.jpg';
+                  const effectiveVendor = element.fulfiller_vendor_id || element.product_owner_id || vendorSelection.effectiveVendorId;
+                  if (effectiveVendor && !localStorage.getItem('vendor_id')) {
+                    localStorage.setItem('vendor_id', String(effectiveVendor));
+                  }
                   let data =
                   {
                     "_id": element.pro_id,
@@ -450,7 +500,10 @@ export class ProductService {
                     "stock": (product['data'].stock - element.qty),
                     "product_sale_price": element.price,
                     "addons": element.addons,
-                    "addonsprice": element.addonsprice
+                    "addonsprice": element.addonsprice,
+                    "product_owner_id": element.product_owner_id || vendorSelection.ownerVendorId,
+                    "fulfiller_vendor_id": element.fulfiller_vendor_id || null,
+                    "effective_vendor_id": effectiveVendor
                   }
                   cartproducts.push(data);
                   localStorage.setItem("cartItems", JSON.stringify(cartproducts));
@@ -464,7 +517,10 @@ export class ProductService {
                     quantity: qty,
                     stock: product.stock,
                     cart_id: res['data']._id,
-                    product_owner: product.product_owner._id
+                    product_owner: vendorSelection.ownerVendorId,
+                    product_owner_id: vendorSelection.ownerVendorId,
+                    fulfiller_vendor_id: vendorSelection.fulfillerVendorId,
+                    effective_vendor_id: vendorSelection.effectiveVendorId
                   })
                 }
 
@@ -484,7 +540,10 @@ export class ProductService {
         state.cart.push({
           ...product,
           quantity: qty,
-          product_owner: product.product_owner._id,
+          product_owner: vendorSelection.ownerVendorId,
+          product_owner_id: vendorSelection.ownerVendorId,
+          fulfiller_vendor_id: vendorSelection.fulfillerVendorId,
+          effective_vendor_id: vendorSelection.effectiveVendorId
         })
       }
     }
@@ -509,13 +568,8 @@ export class ProductService {
             return true;
           }
           else {
-            let product_price = 0;
-            if (product.product_sale_price == null) {
-              product_price = product.product_retail_price
-            }
-            else {
-              product_price = product.product_sale_price
-            }
+            const vendorSelection = this.resolveVendorSelection(product);
+            let product_price = this.resolveEffectivePrice(product);
 
             let cdata =
             {
@@ -529,7 +583,9 @@ export class ProductService {
                 "qty": qty + quantity,
                 "price": product_price,
                 "addons": product.addons,
-                "addonsprice": product.addonsprice
+                "addonsprice": product.addonsprice,
+                "product_owner_id": vendorSelection.ownerVendorId,
+                "fulfiller_vendor_id": vendorSelection.fulfillerVendorId
               }]
             }
 
@@ -543,6 +599,10 @@ export class ProductService {
                   for (const element of res['data'].products) {
                     this.getproductsBySlugs(element.pro_slug).subscribe(product => {
                       product_img = product['data']?.product_image[0] ? product['data'].product_image[0].pro_image : 'assets/images/product/placeholder.jpg';
+                      const effectiveVendor = element.fulfiller_vendor_id || element.product_owner_id || vendorSelection.effectiveVendorId;
+                      if (effectiveVendor && !localStorage.getItem('vendor_id')) {
+                        localStorage.setItem('vendor_id', String(effectiveVendor));
+                      }
                       let data =
                       {
                         "_id": element.pro_id,
@@ -561,7 +621,10 @@ export class ProductService {
                         "stock": (product['data'].stock - element.qty),
                         "product_sale_price": element.price,
                         "addons": element.addons,
-                        "addonsprice": element.addonsprice
+                        "addonsprice": element.addonsprice,
+                        "product_owner_id": element.product_owner_id || vendorSelection.ownerVendorId,
+                        "fulfiller_vendor_id": element.fulfiller_vendor_id || null,
+                        "effective_vendor_id": effectiveVendor
                       }
 
                       console.log('cartproducts Push', data);
@@ -932,7 +995,5 @@ export class ProductService {
   }
 
 }
-
-
 
 

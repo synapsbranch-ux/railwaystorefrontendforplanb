@@ -47,6 +47,7 @@ import { Store3DproductsComponent } from './store-3d-products/store-3d-products.
 import { AllTwoDThreeDProductsComponent } from './all-2d-3d-products/all-2d-3d-products.component';
 // Multi-Store Portal Components
 import { VendorSelectorComponent } from './vendor-selector/vendor-selector.component';
+import { AddReviewComponent } from './add-review/add-review.component';
 @NgModule({
   declarations: [
     ProductNoSidebarComponent,
@@ -80,7 +81,8 @@ import { VendorSelectorComponent } from './vendor-selector/vendor-selector.compo
     SingleStoreBannerComponent,
     AllContactProductsComponent,
     AllTwoDThreeDProductsComponent,
-    VendorSelectorComponent
+    VendorSelectorComponent,
+    AddReviewComponent
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

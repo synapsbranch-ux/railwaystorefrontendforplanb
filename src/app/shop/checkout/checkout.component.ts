@@ -88,23 +88,18 @@ export class CheckoutComponent implements OnInit {
       this.isUserLogin = false;
     }
 
-    let vendorSet = false;
-
     this.productService.cartItems.subscribe(response => this.products = response);
+
+    const effectiveVendorId = this.syncEffectiveVendor();
+    if (effectiveVendorId) {
+      this.getShippingTax();
+    }
 
     for (const element of this.products) {
       this.productService.getproductsBySlugs(element.product_slug)
         .pipe(first())
         .subscribe({
           next: (v) => {
-            if (!vendorSet && v.data.product_owner._id) {
-              if (!localStorage.getItem('vendor_id')) {
-                localStorage.setItem('vendor_id', v.data.product_owner._id);
-              }
-              vendorSet = true;
-              this.getShippingTax(); // Call getShippingTax only once
-            }
-
             let stock = (v.data.stock - element.quantity);
             if (stock < 0) {
               if (v.data.product_name) {
@@ -140,10 +135,29 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  private resolveEffectiveVendorFromCart(): string | null {
+    const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]') || [];
+    if (!Array.isArray(cartItems) || cartItems.length === 0) {
+      return null;
+    }
+    const first = cartItems[0];
+    return first?.effective_vendor_id || first?.fulfiller_vendor_id || first?.product_owner_id || null;
+  }
+
+  private syncEffectiveVendor(): string | null {
+    const vendorId = this.resolveEffectiveVendorFromCart();
+    if (vendorId) {
+      localStorage.setItem('vendor_id', String(vendorId));
+      return String(vendorId);
+    }
+    return localStorage.getItem('vendor_id');
+  }
+
   getShippingTax() {
+    const vendorId = this.syncEffectiveVendor();
     let vendorObj =
     {
-      vendor_id: localStorage.getItem('vendor_id') ? localStorage.getItem('vendor_id') : ''
+      vendor_id: vendorId ? vendorId : ''
     }
     this.productService.getallShippingTaxs(vendorObj).subscribe(
       res => {
@@ -397,7 +411,7 @@ export class CheckoutComponent implements OnInit {
             billing_email: formData.email,
             billing_phone: formData.phone,
             cart_id: localStorage.getItem('cart_'),
-            vendor_id: localStorage.getItem('vendor_id'),
+            vendor_id: this.syncEffectiveVendor() || '',
             store_slug: localStorage.getItem('storeslug'),
             coupon: this.appliedCoupon ? this.appliedCoupon.coupon_name : null
 
@@ -451,7 +465,7 @@ export class CheckoutComponent implements OnInit {
                   billing_email: formData.email,
                   billing_phone: formData.phone,
                   cart_id: localStorage.getItem('cart_'),
-                  vendor_id: localStorage.getItem('vendor_id'),
+                  vendor_id: this.syncEffectiveVendor() || '',
                   store_slug: localStorage.getItem('storeslug'),
                   coupon: this.appliedCoupon ? this.appliedCoupon.coupon_name : null
                 }
@@ -524,7 +538,7 @@ export class CheckoutComponent implements OnInit {
             billing_email: formData.email,
             billing_phone: formData.phone,
             cart_id: localStorage.getItem('cart_'),
-            vendor_id: localStorage.getItem('vendor_id'),
+            vendor_id: this.syncEffectiveVendor() || '',
             store_slug: localStorage.getItem('storeslug'),
             coupon: this.appliedCoupon ? this.appliedCoupon.coupon_name : null
           }
@@ -604,7 +618,7 @@ export class CheckoutComponent implements OnInit {
         billing_email: formData.email,
         billing_phone: formData.phone,
         cart_id: localStorage.getItem('cart_'),
-        vendor_id: localStorage.getItem('vendor_id'),
+        vendor_id: this.syncEffectiveVendor() || '',
         store_slug: localStorage.getItem('storeslug'),
         coupon: this.appliedCoupon ? this.appliedCoupon.coupon_name : null
       }

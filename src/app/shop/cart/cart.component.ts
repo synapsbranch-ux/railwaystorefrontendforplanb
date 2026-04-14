@@ -48,9 +48,20 @@ export class CartComponent implements OnInit {
     this.product_service.cartItems.subscribe(response => response ? this.products = response : this.products = []);
     this.detectNavigationType();
     console.log("ocalStorage.getItem('tax')", localStorage.getItem('tax'));
-    if (localStorage.getItem('vendor_id')) {
+    const effectiveVendorId = this.resolveEffectiveVendorFromCart();
+    if (effectiveVendorId) {
+      localStorage.setItem('vendor_id', effectiveVendorId);
       this.getShippingTax();
     }
+  }
+
+  private resolveEffectiveVendorFromCart(): string | null {
+    const cartLines = JSON.parse(localStorage.getItem('cartItems') || '[]') || [];
+    if (!Array.isArray(cartLines) || cartLines.length === 0) {
+      return null;
+    }
+    const first = cartLines[0];
+    return first?.effective_vendor_id || first?.fulfiller_vendor_id || first?.product_owner_id || null;
   }
 
   getShippingTax() {
@@ -99,15 +110,13 @@ export class CartComponent implements OnInit {
             if (bodydata.hasOwnProperty('products')) {
               localStorage.setItem('cart_', res['data']._id)
               this.cartproducts = [];
-              let vendorSet = false;
+              let shippingLoaded = false;
               for (const element of res['data'].products) {
                 this.product_service.getproductsBySlugs(element.pro_slug).subscribe(product => {
                   if (product['data']) {
-                    // Safely access product_owner with null check
-                    const vendorId = product['data'].product_owner?._id;
-                    if (vendorId && !localStorage.getItem('vendor_id')) {
-                      localStorage.setItem('vendor_id', vendorId);
-                      vendorSet = true;
+                    const effectiveVendorId = element.fulfiller_vendor_id || element.product_owner_id || product['data'].product_owner?._id;
+                    if (effectiveVendorId) {
+                      localStorage.setItem('vendor_id', String(effectiveVendorId));
                     }
 
                     // Safely access product_image with proper null/undefined checks
@@ -139,17 +148,18 @@ export class CartComponent implements OnInit {
                       "product_sale_price": element.price,
                       "addons": element.addons,
                       "addonsprice": element.addonsprice,
+                      "product_owner_id": element.product_owner_id || product['data'].product_owner?._id,
+                      "fulfiller_vendor_id": element.fulfiller_vendor_id || null,
+                      "effective_vendor_id": effectiveVendorId,
                       "pack": packValue,
                     }
                     this.cartproducts.push(data);
                     this.products = this.cartproducts;
                     state.cart.push(this.cartproducts);
                     localStorage.setItem("cartItems", JSON.stringify(this.cartproducts));
-                    // Call getShippingTax if vendor_id was set
-                    if (vendorSet) {
-                      if (localStorage.getItem('vendor_id')) {
-                        this.getShippingTax();
-                      }
+                    if (!shippingLoaded && localStorage.getItem('vendor_id')) {
+                      shippingLoaded = true;
+                      this.getShippingTax();
                     }
                   }
                 })

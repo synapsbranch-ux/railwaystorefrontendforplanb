@@ -158,34 +158,28 @@ export class SingleStoreBannerComponent implements OnInit {
   }
 
   testMediaSectionList(store_slug: any) {
-    this.productService.gettestMediaSection(store_slug).subscribe(
-      res => {
-        this.mediaTextData = res['data'];
-      },
-      error => {
-        // .... HANDLE ERROR HERE
-        this.toastr.success(error.error.message);
-      }
-    );
-
-    // Multi-Store Portal: also load cross-store MTGs
+    // Multi-Store Portal endpoint is the primary source for MTG sections
     this.productService.getVendorStoreLandingMTGs(store_slug).subscribe(
       res => {
-        const crossMTGs = res?.data?.mtgList || [];
-        // Merge cross-store MTGs that aren't already in mediaTextData
-        crossMTGs.forEach((mtg: any) => {
-          const exists = this.mediaTextData.some(
-            (existing: any) => existing._id === mtg._id
-          );
-          if (!exists) {
-            this.mediaTextData.push(mtg);
-          }
-        });
-        // Sort by position
-        this.mediaTextData.sort((a: any, b: any) => (a.position || 0) - (b.position || 0));
+        const mtgList = res?.data?.mtgList || [];
+        this.mediaTextData = [...mtgList].sort((a: any, b: any) => (a.position || 0) - (b.position || 0));
+        if (this.mediaTextData.length === 0) {
+          this.loadLegacyMediaSections(store_slug);
+        }
       },
       error => {
-        // Cross-store MTGs are optional, don't block
+        this.loadLegacyMediaSections(store_slug);
+      }
+    );
+  }
+
+  private loadLegacyMediaSections(store_slug: any) {
+    this.productService.gettestMediaSection(store_slug).subscribe(
+      res => {
+        this.mediaTextData = res['data'] || [];
+      },
+      error => {
+        this.toastr.success(error.error.message);
       }
     );
   }

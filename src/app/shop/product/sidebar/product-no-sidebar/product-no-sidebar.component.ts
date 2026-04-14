@@ -226,6 +226,22 @@ export class ProductNoSidebarComponent implements OnInit, OnChanges {
           res => {
             this.fulfillers = res.data?.fulfillers || [];
             this.hasMultipleFulfillers = this.fulfillers.length > 1;
+
+            const cartItems = JSON.parse(localStorage.getItem('cartItems') || '[]');
+            const cartLine = (cartItems || []).find((item: any) =>
+              item?._id === response.data._id || item?.product_slug === response.data.product_slug
+            );
+            const existingVendorId = cartLine?.fulfiller_vendor_id || cartLine?.effective_vendor_id;
+            if (existingVendorId) {
+              const matched = this.fulfillers.find((f: any) => f?.vendor_id?._id === existingVendorId);
+              if (matched) {
+                this.selectedFulfiller = {
+                  vendorId: matched.vendor_id._id,
+                  vendorPrice: matched.vendor_sales_price,
+                  storeName: matched.store_name || matched.vendor_id?.name
+                };
+              }
+            }
           }
         );
       }
@@ -464,6 +480,7 @@ export class ProductNoSidebarComponent implements OnInit, OnChanges {
     }
     console.log('this.productAddonsPrice ==============', this.productAddonsPrice, this.addonSelectedResult);
     if (this.isProductinCart) {
+      this.applySelectedFulfillerToProduct(product);
       product.addonsprice = this.productAddonsPrice;
       let extraObj =
       {
@@ -487,6 +504,7 @@ export class ProductNoSidebarComponent implements OnInit, OnChanges {
 
     }
     else {
+      this.applySelectedFulfillerToProduct(product);
       product.addonsprice = this.productAddonsPrice;
       let extraObj =
       {
@@ -963,6 +981,18 @@ export class ProductNoSidebarComponent implements OnInit, OnChanges {
   onVendorSelected(event: { vendorId: string; vendorPrice: number; storeName: string }) {
     this.selectedFulfiller = event;
     this.showVendorSelector = false;
+  }
+
+  private applySelectedFulfillerToProduct(product: any) {
+    if (this.selectedFulfiller?.vendorId) {
+      product.selected_fulfiller_vendor_id = this.selectedFulfiller.vendorId;
+      product.selected_fulfiller_price = this.selectedFulfiller.vendorPrice;
+      product.effective_vendor_id = this.selectedFulfiller.vendorId;
+    } else {
+      delete product.selected_fulfiller_vendor_id;
+      delete product.selected_fulfiller_price;
+      delete product.effective_vendor_id;
+    }
   }
 
 }

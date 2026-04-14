@@ -59,37 +59,10 @@
             </div>
         </div>
 
-        <!-- Add review toggle -->
-        <button *ngIf="!showAddReview" class="btn btn-outline-primary btn-sm mt-2"
-                (click)="showAddReview = true">
-            Write a review
-        </button>
-
-        <!-- Add review form -->
-        <div *ngIf="showAddReview" class="add-review-form mt-3 p-3">
-            <h5>Write a Review</h5>
-            <div class="mb-2">
-                <input type="email" class="form-control form-control-sm"
-                       placeholder="Email (optional)"
-                       [(ngModel)]="reviewForm.reviewer_email">
-            </div>
-            <div class="mb-2">
-                <textarea class="form-control form-control-sm" rows="3"
-                          placeholder="Your review..."
-                          [(ngModel)]="reviewForm.comment_text"
-                          maxlength="2000"></textarea>
-            </div>
-            <div class="d-flex gap-2">
-                <button class="btn btn-primary btn-sm"
-                        [disabled]="isSubmittingReview || !reviewForm.comment_text.trim()"
-                        (click)="submitReview()">
-                    {{ isSubmittingReview ? 'Submitting...' : 'Submit' }}
-                </button>
-                <button class="btn btn-outline-secondary btn-sm"
-                        (click)="showAddReview = false">
-                    Cancel
-                </button>
-            </div>
-        </div>
+        <app-add-review
+            [vendorId]="reviewsVendorId"
+            [productId]="productId"
+            (reviewAdded)="onReviewAdded($event)">
+        </app-add-review>
     </div>
 </div>
