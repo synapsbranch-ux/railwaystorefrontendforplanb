@@ -92,7 +92,7 @@ export class SearchComponent implements OnInit {
   {
     if(this.store_slug)
     {
-      this.router.navigateByUrl(`/vendor/${this.store_slug}`)
+      this.router.navigateByUrl(`/${this.store_slug}`)
     }
     else
     {

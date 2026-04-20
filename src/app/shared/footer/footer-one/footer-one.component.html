@@ -10,7 +10,7 @@
                                 <a *ngIf="!vendorhome" routerLink="/" id="headerlogo">
                                     <img [src]="themeLogo" class="img-fluid" alt="logo">
                                 </a>
-                                <a *ngIf="vendorhome" routerLink="/vendor/{{store_slug}}" id="headerlogo">
+                                <a *ngIf="vendorhome" [routerLink]="['/', store_slug]" id="headerlogo">
                                     <img *ngIf="isvendorlogoimage" [src]="themeLogo" class="img-fluid" alt="logo">
                                     <h2 *ngIf="!isvendorlogoimage">{{themeLogo}}</h2>
                                     <small style="text-align: center;">Powered by Ralba Technologies</small>

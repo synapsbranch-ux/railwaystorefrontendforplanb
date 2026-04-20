@@ -31,7 +31,7 @@ export class WishlistComponent implements OnInit {
 
     let store_slug = localStorage.getItem('storeslug');
     if (store_slug) {
-      this.backlink = `/vendor/${store_slug}`;
+      this.backlink = `/${store_slug}`;
     }
     else {
       this.backlink = '/'

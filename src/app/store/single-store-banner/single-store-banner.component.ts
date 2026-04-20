@@ -75,7 +75,7 @@ export class SingleStoreBannerComponent implements OnInit {
 
     this.route.params.subscribe(params => {
       if (params['slug']) {
-        // /vendor/:slug — highest priority
+        // Supports both /vendor/:slug (legacy) and /:slug (canonical)
         this.store_slug = params['slug'];
         localStorage.setItem('storeslug', this.store_slug);
       } else {
@@ -208,7 +208,7 @@ export class SingleStoreBannerComponent implements OnInit {
   getMediaSectionTagsProducts(section: any) {
     // Multi-Store Portal: if this MTG belongs to another store, navigate to that store
     if (section.shop_now_store_slug && section.shop_now_store_slug !== this.store_slug) {
-      this.router.navigate([`/vendor/${section.shop_now_store_slug}`]);
+      this.router.navigate([`/${section.shop_now_store_slug}`]);
       return;
     }
 
