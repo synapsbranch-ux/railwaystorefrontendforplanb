@@ -14,25 +14,41 @@
         </div>
         <div class="vendor-card" *ngFor="let f of fulfillers"
              [class.selected]="selectedVendorId === f.vendor_id?._id">
-            <div class="row align-items-center">
+            <div class="row align-items-center mb-2" *ngIf="!(f.mtg_id?.section_image || f.mtg_id?.heading_text || f.mtg_id?.description_text)">
                 <div class="col-3 col-md-2 text-center">
                     <img [src]="f.store_logo || 'assets/images/placeholder-store.png'"
-                         [alt]="f.vendor_id?.name"
-                         class="vendor-logo">
+                        [alt]="f.vendor_id?.name"
+                        class="vendor-logo">
                 </div>
                 <div class="col-5 col-md-6">
                     <h5 class="vendor-name mb-1">{{ f.store_name || f.vendor_id?.name }}</h5>
                     <p class="vendor-price mb-0">{{ f.vendor_sales_price | currency:'USD' }}</p>
                 </div>
-                <div class="col-4 col-md-4 text-end">
-                    <button class="btn btn-outline-secondary btn-sm mb-1 d-block w-100"
-                            (click)="openReviews(f.vendor_id?._id)">
-                        Reviews
-                    </button>
-                    <button class="btn btn-primary btn-sm d-block w-100"
-                            (click)="selectVendor(f)">
-                        Select
-                    </button>
+            </div>
+
+            <div class="mb-2" *ngIf="f.mtg_id?.section_image || f.mtg_id?.heading_text || f.mtg_id?.description_text">
+                <img *ngIf="f.mtg_id?.section_image" [src]="f.mtg_id?.section_image"
+                    [alt]="f.mtg_id?.section_image_name || f.vendor_id?.name"
+                    class="img-fluid rounded mb-2 w-100">
+                <h5 class="vendor-name mb-1">{{ f.mtg_id?.heading_text || f.store_name || f.vendor_id?.name }}</h5>
+                <p class="mb-2">{{ f.mtg_id?.description_text || '' }}</p>
+                <p class="vendor-price mb-2">{{ f.vendor_sales_price | currency:'USD' }}</p>
+                <a *ngIf="f.store_slug" [routerLink]="['/', f.store_slug]" class="d-inline-block text-decoration-underline mb-2">
+                    Visit {{ f.store_name || f.vendor_id?.name || 'Store' }}
+                </a>
+            </div>
+
+            <div class="d-grid gap-1">
+                <button class="btn btn-outline-secondary btn-sm"
+                    (click)="openReviews(f.vendor_id?._id)">
+                    Reviews
+                </button>
+                <button class="btn btn-primary btn-sm"
+                    (click)="selectVendor(f)">
+                    Select
+                </button>
+                <div class="text-end" *ngIf="f.store_slug && !(f.mtg_id?.section_image || f.mtg_id?.heading_text || f.mtg_id?.description_text)">
+                    <a [routerLink]="['/', f.store_slug]" class="small text-decoration-underline">Visit store</a>
                 </div>
             </div>
         </div>

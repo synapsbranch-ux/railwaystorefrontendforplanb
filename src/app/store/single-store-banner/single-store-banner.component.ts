@@ -162,7 +162,9 @@ export class SingleStoreBannerComponent implements OnInit {
     this.productService.getVendorStoreLandingMTGs(store_slug).subscribe(
       res => {
         const mtgList = res?.data?.mtgList || [];
-        this.mediaTextData = [...mtgList].sort((a: any, b: any) => (a.position || 0) - (b.position || 0));
+        this.mediaTextData = [...mtgList]
+          .map((section: any) => this.normalizeMediaSection(section))
+          .sort((a: any, b: any) => (a.position || 0) - (b.position || 0));
         if (this.mediaTextData.length === 0) {
           this.loadLegacyMediaSections(store_slug);
         }
@@ -176,12 +178,36 @@ export class SingleStoreBannerComponent implements OnInit {
   private loadLegacyMediaSections(store_slug: any) {
     this.productService.gettestMediaSection(store_slug).subscribe(
       res => {
-        this.mediaTextData = res['data'] || [];
+        const rawSections = res['data'] || [];
+        this.mediaTextData = rawSections.map((section: any) => this.normalizeMediaSection(section));
       },
       error => {
         this.toastr.success(error.error.message);
       }
     );
+  }
+
+  private normalizeMediaSection(section: any): any {
+    const targetStoreSlug = section?.shop_now_store_slug || this.store_slug;
+    const targetStoreName = section?.shop_now_store_name || '';
+    const targetStorePath = section?.shop_now_store_path || `/${targetStoreSlug}`;
+
+    return {
+      ...section,
+      shop_now_store_slug: targetStoreSlug,
+      shop_now_store_name: targetStoreName,
+      shop_now_store_logo: section?.shop_now_store_logo || '',
+      shop_now_store_path: targetStorePath,
+      is_cross_store: section?.is_cross_store === true || targetStoreSlug !== this.store_slug
+    };
+  }
+
+  goToMediaSectionStore(section: any) {
+    const targetStoreSlug = section?.shop_now_store_slug || this.store_slug;
+    if (!targetStoreSlug) {
+      return;
+    }
+    this.router.navigate([`/${targetStoreSlug}`]);
   }
 
   getTagsProducts(tag: any) {

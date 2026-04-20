@@ -41,22 +41,33 @@
                 <div class="col-12 col-md-6 col-lg-5 text-center text-lg-start" *ngIf="i % 2 === 0">
                     <h2 class="bigTitle">{{ section.heading_text }}</h2>
                     <p class="bigTitleSubText">{{ section.description_text }}</p>
+                    <a href="javascript:void(0)" class="d-inline-block mb-2 text-decoration-underline"
+                        (click)="goToMediaSectionStore(section)">
+                        Visit {{ section.shop_now_store_name || section.shop_now_store_slug || 'Store' }}
+                    </a>
                     <div class="w-100 d-block d-sm-none" *ngIf="i % 2 === 0">
-                        <img [src]="section.section_image" class="w-100 brandImg" [alt]="section.section_image_name">
+                        <img [src]="section.section_image" class="w-100 brandImg" [alt]="section.section_image_name"
+                            style="cursor: pointer;" (click)="goToMediaSectionStore(section)">
                     </div>
                     <button style="border: 0;" class="blueBtn" (click)="getMediaSectionTagsProducts(section)">Shop Now</button>
                 </div>
                 <div class="col-12 col-md-6 col-lg-7 d-none d-sm-block" *ngIf="i % 2 === 0">
-                    <img [src]="section.section_image" class="w-100 brandImg" [alt]="section.section_image_name">
+                    <img [src]="section.section_image" class="w-100 brandImg" [alt]="section.section_image_name"
+                        style="cursor: pointer;" (click)="goToMediaSectionStore(section)">
                 </div>
                 
                 <!-- Reversed for odd sections -->
                 <div class="col-12 col-md-6 col-lg-7" *ngIf="i % 2 !== 0">
-                    <img [src]="section.section_image" class="w-100" [alt]="section.section_image_name">
+                    <img [src]="section.section_image" class="w-100" [alt]="section.section_image_name"
+                        style="cursor: pointer;" (click)="goToMediaSectionStore(section)">
                 </div>
                 <div class="col-12 col-md-6 col-lg-5 text-center text-lg-end" *ngIf="i % 2 !== 0">
                     <h2 class="bigTitle">{{ section.heading_text }}</h2>
                     <p class="bigTitleSubText">{{ section.description_text }}</p>
+                    <a href="javascript:void(0)" class="d-inline-block mb-2 text-decoration-underline"
+                        (click)="goToMediaSectionStore(section)">
+                        Visit {{ section.shop_now_store_name || section.shop_now_store_slug || 'Store' }}
+                    </a>
                     <!-- <a class="blueBtn" (click)="showAllProducts()">Shop Now</a> -->
                     <button style="border: 0;" class="blueBtn" (click)="getMediaSectionTagsProducts(section)">Shop Now</button>
                 </div>
